@@ -44,6 +44,9 @@ export const EventContainer = styled.section`
   margin: 48px 0;
   column-gap: 88px;
   row-gap: 56px;
+  @media(max-width: 1600px){
+    grid-template-columns: repeat(3, 1fr);
+  }
 `;
 
 export const ImageContainer = styled.div`
