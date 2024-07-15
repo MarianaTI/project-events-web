@@ -1,88 +1,48 @@
 import styled from "@emotion/styled";
 
 export const Container = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--primary-50);
+  margin: 40px 32px;
 `;
 
-export const Login = styled.div`
-  background-color: var(--neutral);
+export const NewEvents = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  border-radius: 15px;
-  width: 500px;
-  height: auto;
-  padding: 32px;
-  box-shadow: 6px 8px 20px #bbb;
-  img {
-    width: 80px;
-  }
   h1 {
     margin: 0;
-    font-size: 30px;
-    font-weight: 600;
-  }
-  p {
-    margin: 0;
-    font-size: 12px;
+    font-size: 24px;
+    font-family: "Poppins", sans-serif;
     font-weight: 400;
-    color: var(--tertiary);
-    :last-child {
-      padding-bottom: 32px;
-    }
+  }
+  .description {
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    color: var(--tertiary-inverse);
   }
 `;
 
-export const Form = styled.form`
+export const Line = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 85%;
-  text-align: left;
-`;
-
-export const LinkStyled = styled.div`
-  display: flex;
-  gap: 8px;
-  padding-top: 20px;
-  span {
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--tertiary);
-  }
-  a {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--primary-500);
-  }
-`;
-
-export const RegisterStyled = styled(Login)`
-  text-align: left;
-  justify-content: start;
-  align-items: start;
-  p {
-    margin: 0;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--tertiary);
-    :last-child {
-      padding-bottom: 16px;
-    }
-  }
-`;
-
-export const FormRegister = styled(Form)`
-  width: 100%;
-`;
-
-export const LinkRegister = styled(LinkStyled)`
-  width: 100%;
   justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: 11%;
+  hr {
+    width: 100%;
+    height: 1px;
+    margin: 2px;
+    color: var(--secondary-inverse);
+  }
 `;
+
+export const EventContainer = styled.section`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-left: 3%;
+  margin: 48px 0;
+  column-gap: 88px;
+  row-gap: 56px;
+`;
+

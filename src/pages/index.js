@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { Color, Container, Form, LinkStyled, Login } from "@/styles/Home.style";
+import {Container, Form, LinkStyled, Login } from "@/styles/Login.style";
 import Head from "next/head";
 import { useForm } from "react-hook-form";
 
