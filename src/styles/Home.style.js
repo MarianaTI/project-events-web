@@ -46,3 +46,11 @@ export const EventContainer = styled.section`
   row-gap: 56px;
 `;
 
+export const ImageContainer = styled.div`
+  margin: 40px 0 64px;
+  img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+`;

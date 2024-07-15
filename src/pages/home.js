@@ -2,16 +2,20 @@ import Card from "@/components/Card";
 import {
   Container,
   EventContainer,
+  ImageContainer,
   Line,
   NewEvents,
 } from "@/styles/Home.style";
 import { FiCalendar } from "react-icons/fi";
 import { event } from "../../constants";
+import Parallax from "@/components/Parallax";
 
 export default function Home() {
   return (
     <Container>
-      <div>Imagen</div>
+      <ImageContainer>
+        <Parallax imageUrl="/images/home.jpg" title="BIGGEST FESTIVAL EVER"/>
+      </ImageContainer>
       <NewEvents>
         <h1>Eventos próximos</h1>
         <Line>
