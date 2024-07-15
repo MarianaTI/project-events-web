@@ -1,6 +1,8 @@
 import {
   ButtonContainer,
   ButtonStyled,
+  CatButton,
+  Categories,
   Container,
   EventContainer,
   EventsContent,
@@ -23,17 +25,27 @@ export default function Event() {
     });
   };
 
+  const navigateToAdd = () => {
+    router.push("/addEvent");
+  }
+
   return (
     <Container>
       <H1Styled>Eventos</H1Styled>
       <ButtonContainer>
-        <ButtonStyled>Agregar evento</ButtonStyled>
+        <ButtonStyled onClick={navigateToAdd}>Agregar evento</ButtonStyled>
       </ButtonContainer>
       <EventsContent>
         <Title>
           <FaFire size={24} color="#5b0888" />
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
+        <Categories>
+          <CatButton>Activos</CatButton>
+          <CatButton>Inactivos</CatButton>
+          <CatButton>Cancelados</CatButton>
+          <CatButton>Concluidos</CatButton>
+        </Categories>
         <EventContainer>
           {event.map((event, index) => (
             <Card

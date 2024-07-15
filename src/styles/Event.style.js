@@ -25,7 +25,7 @@ export const ButtonStyled = styled.button`
   border-radius: 50px;
   cursor: pointer;
   :active {
-    box-shadow: 0px 10px 36px 0px rgba(0,0,0,0.1);
+    box-shadow: 0px 10px 36px 0px rgba(0, 0, 0, 0.1);
     transform: scale(0.98);
   }
 `;
@@ -54,4 +54,32 @@ export const EventContainer = styled.section`
   @media (max-width: 1600px) {
     grid-template-columns: repeat(3, 1fr);
   }
+`;
+
+export const Categories = styled.div`
+  display: flex;
+  gap: 16px;
+  width: 80%;
+  margin: 16px 0;
+  @media (max-width: 1600px) {
+    width: 71%;
+  }
+`;
+
+export const CatButton = styled.button`
+  border: 1px solid var(--primary-500);
+  padding: 6px 12px;
+  border-radius: 25px;
+  font-size: 12px;
+  color: var(--default);
+  font-weight: 600;
+  color: var(--primary-500);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+:hover {
+  background-color: var(--primary-500);
+  color: var(--neutral);
+  border-color: var(--primary-500);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
 `;
