@@ -9,12 +9,22 @@ import {
 import { FiCalendar } from "react-icons/fi";
 import { event } from "../../constants";
 import Parallax from "@/components/Parallax";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+
+  const navigateToEvent = (id) => {
+    return router.push({
+      pathname: "/[id]",
+      query: { id: id },
+    });
+  };
+
   return (
     <Container>
       <ImageContainer>
-        <Parallax imageUrl="/images/home.jpg" title="BIGGEST FESTIVAL EVER"/>
+        <Parallax imageUrl="/images/home.jpg" title="BIGGEST FESTIVAL EVER" />
       </ImageContainer>
       <NewEvents>
         <h1>Eventos próximos</h1>
@@ -39,6 +49,7 @@ export default function Home() {
               guests={event.invitados}
               price={event.costo}
               place={event.lugar}
+              onClick={() => navigateToEvent(event.slug)}
             />
           ))}
         </EventContainer>

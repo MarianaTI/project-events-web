@@ -26,7 +26,7 @@ export default function Home() {
       </Head>
       <Container>
         <Login>
-          <img src="/images/logo.png"/>
+          <img src="/images/logo.png" alt="logo"/>
           <div>
             <h1>Bienvenido</h1>
             <p>Es bueno verte de nuevo! 👋</p>

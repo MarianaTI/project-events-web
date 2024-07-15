@@ -19,7 +19,7 @@ export default function Register() {
   return (
     <Container>
       <RegisterStyled>
-        <img src="/images/logo.png" />
+        <img src="/images/logo.png" alt="logo"/>
         <div>
           <h1>Regístrate</h1>
           <p>Hola! Gracias por estar aquí ✌️</p>
