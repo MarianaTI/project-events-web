@@ -18,8 +18,7 @@ export const Info = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  h1,
-  h2 {
+  h1{
     margin: 0;
     font-size: 14px;
     font-family: "Poppins", sans-serif;

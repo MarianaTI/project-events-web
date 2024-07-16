@@ -7,7 +7,7 @@ const Card = ({name, price, place, time, date, onClick, image}) => {
       <img src={image} alt={name}/>
       <Info>
         <h1>{name}</h1>
-        <h2>${price}</h2>
+        <h1>${price}</h1>
       </Info>
       <Description>
         <span>{place}</span>

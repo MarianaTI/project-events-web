@@ -23,6 +23,10 @@ export const NewEvents = styled.section`
   }
 `;
 
+export const AllEvents = styled(NewEvents)`
+  margin: 100px 0;
+`;
+
 export const Line = styled.div`
   display: flex;
   justify-content: center;
