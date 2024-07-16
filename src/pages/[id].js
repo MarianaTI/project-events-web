@@ -20,21 +20,21 @@ import { IoMdEye } from "react-icons/io";
 export default function IdEvent() {
   const router = useRouter();
   const { id } = router.query;
+  const [isOpen, setIsOpen] = useState(false);
   const eventDetails = event.find((e) => e.slug === id);
 
   if (!eventDetails) {
     return <div>Evento no encontrado</div>;
   }
 
-  let [isOpen, setIsOpen] = useState(true);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
+  const openModal = () => {
     setIsOpen(true);
-  }
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
     <Container>
       <ImageStyled>
@@ -51,9 +51,9 @@ export default function IdEvent() {
         <span>
           <FaClock size={20} color="#5b0888" /> {eventDetails.hora}
         </span>
-        <span>
+        {/* <span>
           <HiMiniUsers size={22} color="#5b0888" /> {eventDetails.invitados}
-        </span>
+        </span> */}
         <span>
           <AiFillDollarCircle size={22} color="#5b0888" /> ${eventDetails.costo}
         </span>

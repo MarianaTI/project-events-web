@@ -25,7 +25,7 @@ export default function AddEvent() {
         <form>
           <Input control={control} name="name" label="Nombre del evento" fullWidth/>
           <Input control={control} name="description" label="Descripción del evento" fullWidth/>
-          <Input control={control} name="price" label="Costo del evento"/>
+          <Input control={control} name="price" label="Costo del evento" />
         </form>
       </Content>
     </Container>

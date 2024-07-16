@@ -2,10 +2,16 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
   margin: 40px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Content = styled.div`
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 40%;
 `;
 
 export const Logo = styled.div`
