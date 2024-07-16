@@ -12,7 +12,7 @@ function Location({ position }) {
     
       return (
         <MapContainer
-          style={{ height: '200px', width: '30%', boxShadow: "0px 10px 20px 0px rgba(0,0,0,0.1)", marginLeft: "28px"}}
+          style={{ height: '200px', width: '30%', boxShadow: "0px 10px 20px 0px rgba(0,0,0,0.1)", marginLeft: "28px", display: "flex", zIndex: "1"}}
           center={position}
           zoom={15}
           scrollWheelZoom={false}
