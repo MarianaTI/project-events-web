@@ -12,10 +12,11 @@ function Location({ position }) {
     
       return (
         <MapContainer
-          style={{ height: '200px', width: '30%', boxShadow: "0px 10px 20px 0px rgba(0,0,0,0.1)"}}
+          style={{ height: '200px', width: '30%', boxShadow: "0px 10px 20px 0px rgba(0,0,0,0.1)", marginLeft: "28px"}}
           center={position}
           zoom={15}
           scrollWheelZoom={false}
+          zoomControl={false}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
