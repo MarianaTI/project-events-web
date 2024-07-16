@@ -49,3 +49,31 @@ export const Information = styled.section`
     color: var(--default);
   }
 `;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 0;
+`;
+
+export const ButtonPeople = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--secondary-500);
+  color: var(--neutral);
+  border-radius: 25px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 12px;
+  border: none;
+  transition: background-color 0.3s ease;
+  outline: none;
+  :hover {
+    background-color: var(--primary-400);
+  }
+  :focus-visible {
+    ring: 2px solid rgba(255, 255, 255, 0.75);
+  }
+`;

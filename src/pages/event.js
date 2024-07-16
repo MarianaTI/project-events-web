@@ -41,6 +41,7 @@ export default function Event() {
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
         <Categories>
+          <CatButton>Todos</CatButton>
           <CatButton>Activos</CatButton>
           <CatButton>Inactivos</CatButton>
           <CatButton>Cancelados</CatButton>
