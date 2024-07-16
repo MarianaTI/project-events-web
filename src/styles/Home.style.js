@@ -51,6 +51,13 @@ export const EventContainer = styled.section`
   @media(max-width: 1600px){
     grid-template-columns: repeat(3, 1fr);
   }
+  h1{
+    margin: 0;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--default);
+  }
 `;
 
 export const ImageContainer = styled.div`

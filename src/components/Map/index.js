@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 
 const MapComponent = ({ onLocationChange }) => {
-  const [position, setPosition] = useState([51.505, -0.09]); // Default position
+  const [position, setPosition] = useState([51.505, -0.09]);
 
   const LocationMarker = () => {
     const map = useMapEvents({

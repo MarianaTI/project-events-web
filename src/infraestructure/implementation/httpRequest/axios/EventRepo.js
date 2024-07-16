@@ -5,7 +5,18 @@ class EventRepo extends IEventRepo {
   constructor(id_user) {
     super();
     this.id_user = id_user;
+    this.url = "http://localhost:3000/api/events/";
     this.urlPost = "http://localhost:3000/api/event/post";
+  }
+
+  async getAll() {
+    try {
+      const response = await axios.get(this.url);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching los events:", error.message);
+      throw error;
+    }
   }
 
   async create(event) {
