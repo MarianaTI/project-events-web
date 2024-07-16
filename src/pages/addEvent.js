@@ -1,9 +1,13 @@
+import File from "@/components/File";
 import Input from "@/components/Input";
+import Textarea from "@/components/Textarea";
 import { Container, Content, H5Styled, Logo } from "@/styles/AddEvent.style";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function AddEvent() {
+  const [imageUrl, setImageUrl] = useState("");
+  const fileInputRef = useRef(null);
   const {
     control,
     handleSubmit,
@@ -23,9 +27,35 @@ export default function AddEvent() {
           todos!
         </H5Styled>
         <form>
-          <Input control={control} name="name" label="Nombre del evento" fullWidth/>
-          <Input control={control} name="description" label="Descripción del evento" fullWidth/>
-          <Input control={control} name="price" label="Costo del evento" />
+          <Input
+            control={control}
+            name="title"
+            label="Nombre del evento"
+            fullWidth
+          />
+          <Textarea
+            placeholder="Escriba aquí su comentario..."
+            fullWidth
+            control={control}
+            name="description"
+            commentDesign
+          />
+          <Input control={control} name="cost" label="Costo del evento" />
+          <File
+            name="image"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                  console.log("Imagen en base64:", reader.result);
+                  setImageUrl(reader.result);
+                };
+                reader.readAsDataURL(file);
+              }
+            }}
+            ref={fileInputRef}
+          />
         </form>
       </Content>
     </Container>
