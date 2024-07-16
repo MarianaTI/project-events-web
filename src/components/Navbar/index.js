@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { FiMenu, FiX } from "react-icons/fi";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
 
 export const Logo = styled.span`
   color: var(--default);
@@ -52,6 +54,16 @@ export const ButtonStyled = styled.button`
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const route = useRouter();
+
+  const handleSignOut = () => {
+    try {
+      Cookies.remove("userToken");
+      route.push("/");
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
+  };
 
   return (
     <header className="bg-transparent">
@@ -75,7 +87,7 @@ const Navbar = () => {
         <div className="hidden lg:flex lg:gap-x-12">
           <StyledLink href="/home">Home</StyledLink>
           <StyledLink href="/event">Eventos</StyledLink>
-          <ButtonStyled>
+          <ButtonStyled onClick={handleSignOut}>
             Salir <span aria-hidden="true">&rarr;</span>
           </ButtonStyled>
         </div>
@@ -131,7 +143,7 @@ const Navbar = () => {
                   Eventos
                 </a>
               </div>
-              <div className="py-6">
+              <div className="py-6" onClick={handleSignOut}>
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"

@@ -1,10 +1,20 @@
+import { setUser } from "@/actions/userActions";
+import SignInUserUseCase from "@/application/usecases/userUseCase/SignInUserUseCase";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import User from "@/domain/entities/user";
+import UserRepo from "@/infraestructure/implementation/httpRequest/axios/UserRepo";
 import {Container, Form, LinkStyled, Login } from "@/styles/Login.style";
+import Cookies from "js-cookie";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import CryptoJS from "crypto-js";
 
 export default function Home() {
+  const route = useRouter();
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -15,6 +25,27 @@ export default function Home() {
       password: "",
     },
   });
+
+  const onSubmit = async (data) => {
+    try {
+      const user = new User(null, null, null, data.email, data.password);
+      const userRepo = new UserRepo(dispatch);
+      const signInUseCase = new SignInUserUseCase(userRepo);
+      const signInResponse = await signInUseCase.run(user);
+
+      if (signInResponse && signInResponse.token) {
+        const encryptedToken = CryptoJS.AES.encrypt(
+          signInResponse.token,
+          "cookie-encrypted"
+        ).toString();
+        Cookies.set("userToken", encryptedToken, { expires: 1 / 24 });
+        dispatch(setUser(signInResponse.user));
+        route.push("/home");
+      }
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
   
   return (
     <>
@@ -32,10 +63,10 @@ export default function Home() {
             <p>Es bueno verte de nuevo! 👋</p>
             <p>Inicia sesión con tus datos aquí debajo 👇</p>
           </div>
-          <Form>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Input fullWidth control={control} name="email" label="Correo"/>
             <Input fullWidth control={control} name="password" label="Contraseña"/>
-            <Button text="Inicia sesión"/>
+            <Button text="Inicia sesión" type="submit"/>
           </Form>
           <LinkStyled>
             <span>¿Aun no tienes una cuenta?</span>
