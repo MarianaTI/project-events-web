@@ -18,8 +18,10 @@ import { useSelector } from "react-redux";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import GetOneEventUseCase from "@/application/usecases/eventUseCase/GetOneEventUseCase";
 import dynamic from "next/dynamic";
+import GuestRepo from "@/infraestructure/implementation/httpRequest/axios/GuestRepo";
+import GetOneGuestUseCase from "@/application/usecases/guestUseCase/GetOneGuestUseCase";
 
-const Location = dynamic(() => import('@/components/Location/Location'), {
+const Location = dynamic(() => import("@/components/Location/Location"), {
   ssr: false,
 });
 
@@ -29,9 +31,13 @@ export default function IdEvent() {
   const { id } = router.query;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [locationName, setLocationName] = useState('');
+  const [guest, setGuest] = useState([]);
+  const [locationName, setLocationName] = useState("");
   const eventRepo = new EventRepo();
   const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
+
+  const guestRepo = new GuestRepo();
+  const getGuestUseCase = new GetOneGuestUseCase(guestRepo);
 
   const openModal = () => {
     setIsOpen(true);
@@ -65,11 +71,23 @@ export default function IdEvent() {
       try {
         const response = await getOneEventUseCase.run(id);
         setSelectedEvent(response.response);
-        
+
         const locationCoords = response.response.location
-          .split(',')
-          .map(coord => parseFloat(coord));
+          .split(",")
+          .map((coord) => parseFloat(coord));
         fetchLocationName(locationCoords);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const fetchGuest = async () => {
+    if (id) {
+      try {
+        const response = await getGuestUseCase.run(id);
+        setGuest(response.event);
+        console.log(guest);
       } catch (error) {
         console.log(error);
       }
@@ -78,13 +96,16 @@ export default function IdEvent() {
 
   const fetchLocationName = async (coords) => {
     const [lat, lon] = coords;
-    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+    );
     const data = await response.json();
     setLocationName(data.display_name);
   };
 
   useEffect(() => {
     fetchEvent();
+    fetchGuest();
   }, [id]);
 
   if (!selectedEvent) {
@@ -92,8 +113,8 @@ export default function IdEvent() {
   }
 
   const locationCoords = selectedEvent.location
-    .split(',')
-    .map(coord => parseFloat(coord));
+    .split(",")
+    .map((coord) => parseFloat(coord));
 
   return (
     <Container>
@@ -106,7 +127,8 @@ export default function IdEvent() {
         <p>{selectedEvent.description}</p>
         <h1>Más información‼️</h1>
         <span>
-          <FaCalendar size={20} color="#5b0888" /> {formatDate(selectedEvent.date)}
+          <FaCalendar size={20} color="#5b0888" />{" "}
+          {formatDate(selectedEvent.date)}
         </span>
         <span>
           <FaClock size={20} color="#5b0888" /> {formatTime(selectedEvent.date)}
@@ -120,7 +142,7 @@ export default function IdEvent() {
         <span className="location">
           <MdLocationOn size={23} color="#5b0888" /> {locationName}
         </span>
-        <Location position={locationCoords}/>
+        <Location position={locationCoords} />
         <ButtonsContainer>
           <ButtonPeople type="button">
             <FaHeart size={14} />
@@ -170,9 +192,9 @@ export default function IdEvent() {
                       <div className="mt-2">
                         {/* Contenido */}
                         <ul>
-                          {members.map((person, index) => (
-                            <li>{person.name}</li>
-                          ))}
+                          {guest.length > 0 ? guest.map((person, index) => (
+                            <li key={index}>{person.user.fullname}</li>
+                          )) : <li>No hay invitados registrados.</li>}
                         </ul>
                       </div>
 
