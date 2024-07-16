@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import File from "@/components/File";
 import Input from "@/components/Input";
+import MapComponent from "@/components/Map";
 import Textarea from "@/components/Textarea";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import { Container, Content, H5Styled, Logo } from "@/styles/AddEvent.style";
@@ -12,6 +13,7 @@ export default function AddEvent() {
   const userId = useSelector((state) => state.user._id);
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef(null);
+  const [location, setLocation] = useState(null);
   const {
     control,
     handleSubmit,
@@ -26,6 +28,7 @@ export default function AddEvent() {
       ...data,
       image: file,
       id_user: userId,
+      location,
     };
 
     try {
@@ -84,7 +87,7 @@ export default function AddEvent() {
             type="datetime-local"
           />
           <Input control={control} name="cost" label="Costo del evento" />
-          <Input control={control} name="location" label="Lugar del evento" />
+          <MapComponent onLocationChange={setLocation} />
           <div>
             <Button text="Aceptar" type="submit" />
           </div>
