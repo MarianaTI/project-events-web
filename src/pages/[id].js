@@ -10,7 +10,6 @@ import {
 } from "@/styles/Id.style";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { MdLocationOn } from "react-icons/md";
-import { HiMiniUsers } from "react-icons/hi2";
 import { FaClock, FaHeart } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
@@ -18,6 +17,11 @@ import { IoMdEye } from "react-icons/io";
 import { useSelector } from "react-redux";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import GetOneEventUseCase from "@/application/usecases/eventUseCase/GetOneEventUseCase";
+import dynamic from "next/dynamic";
+
+const Location = dynamic(() => import('@/components/Location/Location'), {
+  ssr: false,
+});
 
 export default function IdEvent() {
   const router = useRouter();
@@ -25,6 +29,7 @@ export default function IdEvent() {
   const { id } = router.query;
   const [isOpen, setIsOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [locationName, setLocationName] = useState('');
   const eventRepo = new EventRepo();
   const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
 
@@ -60,10 +65,22 @@ export default function IdEvent() {
       try {
         const response = await getOneEventUseCase.run(id);
         setSelectedEvent(response.response);
+        
+        const locationCoords = response.response.location
+          .split(',')
+          .map(coord => parseFloat(coord));
+        fetchLocationName(locationCoords);
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const fetchLocationName = async (coords) => {
+    const [lat, lon] = coords;
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+    const data = await response.json();
+    setLocationName(data.display_name);
   };
 
   useEffect(() => {
@@ -73,6 +90,10 @@ export default function IdEvent() {
   if (!selectedEvent) {
     return <div>No existe este evento, intenta seleccionando otro.</div>;
   }
+
+  const locationCoords = selectedEvent.location
+    .split(',')
+    .map(coord => parseFloat(coord));
 
   return (
     <Container>
@@ -96,9 +117,10 @@ export default function IdEvent() {
         <span>
           <AiFillDollarCircle size={22} color="#5b0888" /> ${selectedEvent.cost}
         </span>
-        <span>
-          <MdLocationOn size={23} color="#5b0888" /> {selectedEvent.location}
+        <span className="location">
+          <MdLocationOn size={23} color="#5b0888" /> {locationName}
         </span>
+        <Location position={locationCoords}/>
         <ButtonsContainer>
           <ButtonPeople type="button">
             <FaHeart size={14} />

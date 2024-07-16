@@ -42,6 +42,14 @@ export const Information = styled.section`
     font-weight: 500;
     color: var(--default);
   }
+  .location {
+    display: flex;
+    align-items: start;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--default);
+  }
   h5 {
     font-size: 28px;
     font-family: "Poppins", sans-serif;
