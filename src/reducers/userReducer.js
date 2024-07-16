@@ -2,7 +2,7 @@ const isBrowser = typeof window !== "undefined";
 
 const initialState = {
   _id: isBrowser ? JSON.parse(localStorage.getItem("user"))?._id || null : null,
-  username: isBrowser
+  name: isBrowser
     ? JSON.parse(localStorage.getItem("user"))?.name || null
     : null,
 };
@@ -15,7 +15,10 @@ const userReducer = (state = initialState, action) => {
         ...action.payload,
       };
 
-      localStorage.setItem("user", JSON.stringify(newState));
+      
+      if (isBrowser) {
+        localStorage.setItem("user", JSON.stringify(newState));
+      }
 
       return newState;
     default:

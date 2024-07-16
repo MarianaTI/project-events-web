@@ -15,8 +15,7 @@ import { H1Styled, Title } from "@/styles/Event.style";
 import { FaFire } from "react-icons/fa6";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import GetAllEventUseCase from "@/application/usecases/eventUseCase/GetAllEventUseCase";
-import { useContext, useEffect, useState } from "react";
-import { LocationContext } from "@/components/Map/location";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -95,8 +94,6 @@ export default function Home() {
                   date={formatDate(event.date)}
                   description={event.description}
                   price={event.cost}
-                  // Utiliza el nombre del lugar del contexto
-                  // place={event.location}
                   onClick={() => navigateToEvent(event.slug)}
                 />
               ))}
@@ -125,8 +122,6 @@ export default function Home() {
                   date={formatDate(event.date)}
                   description={event.description}
                   price={event.cost}
-                  // Utiliza el nombre del lugar del contexto
-                  // place={event.location}
                   onClick={() => navigateToEvent(event.slug)}
                 />
               ))}

@@ -87,7 +87,7 @@ export default function AddEvent() {
             type="datetime-local"
           />
           <Input control={control} name="cost" label="Costo del evento" />
-          <MapComponent onLocationChange={setLocation} />
+          <MapComponent onLocationChange={setLocation} /> 
           <div>
             <Button text="Aceptar" type="submit" />
           </div>
