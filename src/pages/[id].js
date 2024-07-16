@@ -1,13 +1,12 @@
 import { useRouter } from "next/router";
-import React, { Fragment, useState } from "react";
-import { event, members } from "../../constants";
+import React, { Fragment, useEffect, useState } from "react";
+import { members } from "../../constants";
 import {
   ButtonPeople,
   ButtonsContainer,
   Container,
   ImageStyled,
   Information,
-  Users,
 } from "@/styles/Id.style";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { MdLocationOn } from "react-icons/md";
@@ -16,16 +15,18 @@ import { FaClock, FaHeart } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoMdEye } from "react-icons/io";
+import { useSelector } from "react-redux";
+import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
+import GetOneEventUseCase from "@/application/usecases/eventUseCase/GetOneEventUseCase";
 
 export default function IdEvent() {
   const router = useRouter();
+  const userId = useSelector((state) => state.user._id);
   const { id } = router.query;
   const [isOpen, setIsOpen] = useState(false);
-  const eventDetails = event.find((e) => e.slug === id);
-
-  if (!eventDetails) {
-    return <div>Evento no encontrado</div>;
-  }
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const eventRepo = new EventRepo();
+  const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
 
   const openModal = () => {
     setIsOpen(true);
@@ -35,35 +36,73 @@ export default function IdEvent() {
     setIsOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.toLocaleDateString("es-ES", { month: "long" });
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+    return `${hours}:${minutesStr} ${ampm}`;
+  };
+
+  const fetchEvent = async () => {
+    if (id) {
+      try {
+        const response = await getOneEventUseCase.run(id);
+        setSelectedEvent(response.response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchEvent();
+  }, [id]);
+
+  if (!selectedEvent) {
+    return <div>No existe este evento, intenta seleccionando otro.</div>;
+  }
+
   return (
     <Container>
       <ImageStyled>
-        <img src={eventDetails.imagen} alt={eventDetails.nombre} />
-        <h1>{eventDetails.nombre}</h1>
+        <img src={selectedEvent.image.secureUrl} alt={selectedEvent.title} />
+        <h1>{selectedEvent.title}</h1>
       </ImageStyled>
       <Information>
         <h5>Información del evento 🎉</h5>
-        <p>{eventDetails.descripcion}</p>
+        <p>{selectedEvent.description}</p>
         <h1>Más información‼️</h1>
         <span>
-          <FaCalendar size={20} color="#5b0888" /> {eventDetails.fecha}
+          <FaCalendar size={20} color="#5b0888" /> {formatDate(selectedEvent.date)}
         </span>
         <span>
-          <FaClock size={20} color="#5b0888" /> {eventDetails.hora}
+          <FaClock size={20} color="#5b0888" /> {formatTime(selectedEvent.date)}
         </span>
         {/* <span>
           <HiMiniUsers size={22} color="#5b0888" /> {eventDetails.invitados}
         </span> */}
         <span>
-          <AiFillDollarCircle size={22} color="#5b0888" /> ${eventDetails.costo}
+          <AiFillDollarCircle size={22} color="#5b0888" /> ${selectedEvent.cost}
         </span>
         <span>
-          <MdLocationOn size={23} color="#5b0888" /> {eventDetails.lugar}
+          <MdLocationOn size={23} color="#5b0888" /> {selectedEvent.location}
         </span>
         <ButtonsContainer>
           <ButtonPeople type="button">
             <FaHeart size={14} />
-            Confirmar asistencia  
+            Confirmar asistencia
           </ButtonPeople>
           <ButtonPeople type="button" onClick={openModal}>
             <IoMdEye size={18} />

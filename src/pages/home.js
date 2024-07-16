@@ -94,7 +94,7 @@ export default function Home() {
                   date={formatDate(event.date)}
                   description={event.description}
                   price={event.cost}
-                  onClick={() => navigateToEvent(event.slug)}
+                  onClick={() => navigateToEvent(event._id)}
                 />
               ))}
             </EventContainer>
@@ -122,7 +122,7 @@ export default function Home() {
                   date={formatDate(event.date)}
                   description={event.description}
                   price={event.cost}
-                  onClick={() => navigateToEvent(event.slug)}
+                  onClick={() => navigateToEvent(event._id)}
                 />
               ))}
             </EventContainer>

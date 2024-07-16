@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonStyled, Container, Description, Info } from "./index.style";
 
-const Card = ({name, price, place, time, date, onClick, image}) => {
+const Card = ({name, price, time, date, onClick, image}) => {
   return (
     <Container>
       <img src={image} alt={name}/>
@@ -10,7 +10,6 @@ const Card = ({name, price, place, time, date, onClick, image}) => {
         <h1>${price}</h1>
       </Info>
       <Description>
-        <span>{place}</span>
         <span>{time}</span>
         <span>{date}</span>
       </Description>

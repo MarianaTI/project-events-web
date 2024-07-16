@@ -6,6 +6,7 @@ class EventRepo extends IEventRepo {
     super();
     this.id_user = id_user;
     this.url = "http://localhost:3000/api/events/";
+    this.urlId = "http://localhost:3000/api/events/";
     this.urlPost = "http://localhost:3000/api/event/post";
   }
 
@@ -15,6 +16,16 @@ class EventRepo extends IEventRepo {
       return response.data;
     } catch (error) {
       console.error("Error fetching los events:", error.message);
+      throw error;
+    }
+  }
+
+  async getOne(_id) {
+    try {
+      const response = await axios.get(`${this.urlId}${_id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching los blogs:", error.message);
       throw error;
     }
   }
