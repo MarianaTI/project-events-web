@@ -12,7 +12,7 @@ class CreateEventUseCase {
       const createdEvent = await this.eventRepo.create(event);
       return createdEvent;
     } catch (error) {
-      console.log("Error creating blog:", error);
+      console.log("Error creating event:", error);
       throw error;
     }
   }

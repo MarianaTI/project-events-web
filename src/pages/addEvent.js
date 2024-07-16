@@ -1,11 +1,15 @@
+import Button from "@/components/Button";
 import File from "@/components/File";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
+import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import { Container, Content, H5Styled, Logo } from "@/styles/AddEvent.style";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 export default function AddEvent() {
+  const userId = useSelector((state) => state.user._id);
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef(null);
   const {
@@ -13,6 +17,24 @@ export default function AddEvent() {
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({});
+
+  const eventRepo = new EventRepo();
+
+  const onSubmit = async (data) => {
+    const file = fileInputRef.current.files[0];
+    const eventData = {
+      ...data,
+      image: file,
+      id_user: userId,
+    };
+
+    try {
+      const response = await eventRepo.create(eventData);
+      console.log("evento: ", response);
+    } catch (error) {
+      console.error("Error al crear el event:", error);
+    }
+  };
 
   return (
     <Container>
@@ -26,7 +48,7 @@ export default function AddEvent() {
           nuestro calendario. ¡Queremos que tu ocasión especial sea conocida por
           todos!
         </H5Styled>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Input
             control={control}
             name="title"
@@ -40,7 +62,6 @@ export default function AddEvent() {
             name="description"
             commentDesign
           />
-          <Input control={control} name="cost" label="Costo del evento" />
           <File
             name="image"
             onChange={(e) => {
@@ -56,6 +77,17 @@ export default function AddEvent() {
             }}
             ref={fileInputRef}
           />
+          <Input
+            control={control}
+            name="date"
+            label="Fecha y hora del evento"
+            type="datetime-local"
+          />
+          <Input control={control} name="cost" label="Costo del evento" />
+          <Input control={control} name="location" label="Lugar del evento" />
+          <div>
+            <Button text="Aceptar" type="submit" />
+          </div>
         </form>
       </Content>
     </Container>

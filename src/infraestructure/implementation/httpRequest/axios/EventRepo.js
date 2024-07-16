@@ -11,13 +11,13 @@ class EventRepo extends IEventRepo {
   async create(event) {
     try {
       const formData = new FormData();
-      formData.append("id_user", blog.id_user);
-      formData.append("title", blog.title);
-      formData.append("description", blog.description);
-      formData.append("image", blog.image);
-      formData.append("date", blog.date);
-      formData.append("cost", blog.cost);
-      formData.append("location", blog.location);
+      formData.append("id_user", event.id_user);
+      formData.append("title", event.title);
+      formData.append("description", event.description);
+      formData.append("image", event.image);
+      formData.append("date", event.date);
+      formData.append("cost", event.cost);
+      formData.append("location", event.location);
       const response = await axios.post(this.urlPost, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -26,7 +26,7 @@ class EventRepo extends IEventRepo {
       });
       return response.data;
     } catch (error) {
-      console.error("Error al crear el blog:", error);
+      console.error("Error al crear el event:", error);
       throw error;
     }
   }
