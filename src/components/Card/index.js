@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonStyled, Container, Description, Info } from "./index.style";
+import { ButtonStyled, Container, Description, FreeText, Info } from "./index.style";
 
 const Card = ({name, price, time, date, onClick, image}) => {
   return (
@@ -7,7 +7,7 @@ const Card = ({name, price, time, date, onClick, image}) => {
       <img src={image} alt={name}/>
       <Info>
         <h1>{name}</h1>
-        <h1>${price}</h1>
+        {price === 0 ? <h1 style={{color: "var(--primary-500)"}}>Gratis</h1> : <h1>${price}</h1>}
       </Info>
       <Description>
         <span>{time}</span>
