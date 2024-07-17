@@ -18,8 +18,8 @@ export const TextareaStyled = styled.textarea`
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   height: 40px;
   border-radius: 10px;
-  background-color: #eee;
-  border: none;
+  background-color: transparent;
+  border: 1px solid #ddd;
   margin: 8px 0;
   height: 120px;
   padding: 12px;

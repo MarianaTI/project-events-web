@@ -25,8 +25,9 @@ export const StyledFileInput = styled.input`
     color: var(--default);
     border-radius: 10px;
     background: var(--primary-100);
+    transition: background 0.7s ease;
     :hover {
-      background: var(--primary-300);
+      background: var(--primary-200);
     }
   }
 `;

@@ -5,7 +5,7 @@ import { Label } from "../Input/index.style";
 const File = forwardRef(({ name, onChange, fileName }, ref) => {
   return (
     <Container>
-      <Label>Figura de herraje</Label>
+      <Label>Imagen</Label>
       <StyledFileInput type="file" name={name} onChange={onChange} ref={ref}/>
       {/* {fileName ? fileName : "Ningún archivo seleccionado"} */}
     </Container>

@@ -4,12 +4,23 @@ import Input from "@/components/Input";
 import MapComponent from "@/components/Map";
 import Textarea from "@/components/Textarea";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
-import { Container, Content, H5Styled, Logo } from "@/styles/AddEvent.style";
+import {
+  ButtonContainer,
+  Container,
+  Content,
+  Flex,
+  FormStyled,
+  H5Styled,
+  Label,
+  Logo,
+} from "@/styles/AddEvent.style";
+import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 export default function CreateEvent() {
+  const router = useRouter();
   const userId = useSelector((state) => state.user._id);
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef(null);
@@ -33,7 +44,7 @@ export default function CreateEvent() {
 
     try {
       const response = await eventRepo.create(eventData);
-      console.log("evento: ", response);
+      router.push('/user/event')
     } catch (error) {
       console.error("Error al crear el event:", error);
     }
@@ -51,20 +62,17 @@ export default function CreateEvent() {
           nuestro calendario. ¡Queremos que tu ocasión especial sea conocida por
           todos!
         </H5Styled>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            control={control}
-            name="title"
-            label="Nombre del evento"
-            fullWidth
-          />
-          <Textarea
-            placeholder="Escriba aquí su comentario..."
-            fullWidth
-            control={control}
-            name="description"
-            commentDesign
-          />
+        <FormStyled onSubmit={handleSubmit(onSubmit)}>
+          <Input control={control} name="title" label="Título" fullWidth />
+          <div>
+            <Label>Descripción</Label>
+            <Textarea
+              placeholder="Escriba aquí su comentario..."
+              fullWidth
+              control={control}
+              name="description"
+            />
+          </div>
           <File
             name="image"
             onChange={(e) => {
@@ -80,18 +88,30 @@ export default function CreateEvent() {
             }}
             ref={fileInputRef}
           />
-          <Input
-            control={control}
-            name="date"
-            label="Fecha y hora del evento"
-            type="datetime-local"
-          />
-          <Input control={control} name="cost" label="Costo del evento" />
-          <MapComponent onLocationChange={setLocation} /> 
+          <Flex>
+            <Input
+              control={control}
+              name="date"
+              label="Fecha y hora"
+              type="datetime-local"
+              fullWidth
+            />
+            <Input
+              control={control}
+              name="cost"
+              label="Precio"
+              fullWidth
+              placeholder="$ 0.00"
+            />
+          </Flex>
           <div>
-            <Button text="Aceptar" type="submit" />
+            <Label>Ubicación</Label>
+            <MapComponent onLocationChange={setLocation} />
           </div>
-        </form>
+          <ButtonContainer>
+            <Button text="Aceptar" type="submit" />
+          </ButtonContainer>
+        </FormStyled>
       </Content>
     </Container>
   );

@@ -31,7 +31,7 @@ function MapComponent({ onLocationChange, initialPosition }) {
 
   return (
     <MapContainer
-      style={{ height: "400px" }}
+      style={{ height: "400px", borderRadius: "12px", margin: "12px 0" }}
       center={markerPosition}
       zoom={13}
       scrollWheelZoom={false}
