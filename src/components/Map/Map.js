@@ -1,11 +1,16 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 
-function Map({ onLocationChange }) {
-  const initialPosition = [20.97537, -89.61696];
-  const [markerPosition, setMarkerPosition] = useState(initialPosition);
+function MapComponent({ onLocationChange, initialPosition }) {
+  const [markerPosition, setMarkerPosition] = useState(initialPosition || [20.97537, -89.61696]);
+
+  useEffect(() => {
+    if (initialPosition) {
+      setMarkerPosition(initialPosition);
+    }
+  }, [initialPosition]);
 
   const LocationMarker = () => {
     useMapEvents({
@@ -27,9 +32,10 @@ function Map({ onLocationChange }) {
   return (
     <MapContainer
       style={{ height: "400px" }}
-      center={initialPosition}
+      center={markerPosition}
       zoom={13}
       scrollWheelZoom={false}
+      key={markerPosition.join(",")}
     >
       <TileLayer
         attribution="bullseye map"
@@ -40,4 +46,4 @@ function Map({ onLocationChange }) {
   );
 }
 
-export default Map;
+export default MapComponent;
