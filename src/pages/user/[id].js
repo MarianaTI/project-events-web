@@ -156,14 +156,18 @@ export default function IdEvent() {
         </span>
         <Location position={locationCoords} />
         <ButtonsContainer>
-          <ButtonPeople onClick={onSubmit}>
-            <FaHeart size={14} />
-            Confirmar asistencia
-          </ButtonPeople>
           <ButtonPeople type="button" onClick={openModal}>
             <IoMdEye size={18} />
             Ver invitados
           </ButtonPeople>
+          <div style={{display: "flex", gap: "12px"}}>
+            <ButtonPeople onClick={onSubmit}>
+              Editar
+            </ButtonPeople>
+            <ButtonPeople onClick={onSubmit}>
+              Eliminar
+            </ButtonPeople>
+          </div>
 
           <Transition appear show={isOpen} as={Fragment}>
             <Dialog

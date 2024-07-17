@@ -26,7 +26,7 @@ export default function Event() {
 
   const navigateToEvent = (id) => {
     return router.push({
-      pathname: "/[id]",
+      pathname: "/user/[id]",
       query: { id: id },
     });
   };
@@ -78,7 +78,7 @@ export default function Event() {
       </ButtonContainer>
       <EventsContent>
         <Title>
-          <FaFire size={24} color="#5b0888" />
+          <FaFire size={24} color="#122088" />
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
         <Categories>

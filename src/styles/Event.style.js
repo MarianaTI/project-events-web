@@ -67,19 +67,19 @@ export const Categories = styled.div`
 `;
 
 export const CatButton = styled.button`
-  border: 1px solid var(--primary-500);
+  border: 1px solid #122088;
   padding: 6px 12px;
   border-radius: 25px;
   font-size: 12px;
   color: var(--default);
   font-weight: 600;
-  color: var(--primary-500);
+  color: #122088;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
 :hover {
-  background-color: var(--primary-500);
+  background-color: #122088;
   color: var(--neutral);
-  border-color: var(--primary-500);
+  border-color: #122088;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 `;

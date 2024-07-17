@@ -38,7 +38,7 @@ export const StyledLink = styled.a`
     position: absolute;
     width: 0%;
     height: 2px;
-    background-color: var(--secondary-400);
+    background-color: #122088;
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
     transition-duration: 400ms;
     transition-property: width, left;
@@ -86,7 +86,7 @@ const Navbar = () => {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <StyledLink href="/home">Home</StyledLink>
-          <StyledLink href="/event">Eventos</StyledLink>
+          <StyledLink href="/user/event">Eventos</StyledLink>
           <ButtonStyled onClick={handleSignOut}>
             Salir <span aria-hidden="true">&rarr;</span>
           </ButtonStyled>
@@ -137,7 +137,7 @@ const Navbar = () => {
                   Home
                 </a>
                 <a
-                  href="/event"
+                  href="/user/event"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Eventos
