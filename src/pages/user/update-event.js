@@ -53,7 +53,7 @@ export default function UpdateEvent() {
       date: data.date,
       date: data.date,
       cost: data.cost,
-      location: data.location,
+      location: location.join(","),
     };
 
     const eventRepo = new EventRepo(userId);
@@ -61,7 +61,6 @@ export default function UpdateEvent() {
 
     try {
       const response = await updateEventUseCase.run(eventData);
-      console.log("Event updated successfully: ", response);
       router.push("/user/event");
     } catch (error) {
       console.error("Error updating event: ", error);
@@ -112,7 +111,7 @@ export default function UpdateEvent() {
             type="datetime-local"
           />
           <Input control={control} name="cost" label="Costo del evento" />
-          <MapComponent onLocationChange={setLocation} />
+          <MapComponent onLocationChange={setLocation} initialPosition={location}/>
           <div>
             <Button text="Aceptar" type="submit" />
           </div>
