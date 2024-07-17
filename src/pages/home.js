@@ -101,7 +101,7 @@ export default function Home() {
           )}
         </div>
       </NewEvents>
-      <AllEvents>
+      {/* <AllEvents>
         <Title>
           <FaFire size={24} color="#5b0888" />
           <H1Styled>Todos los eventos</H1Styled>
@@ -128,7 +128,7 @@ export default function Home() {
             </EventContainer>
           )}
         </div>
-      </AllEvents>
+      </AllEvents> */}
     </Container>
   );
 }

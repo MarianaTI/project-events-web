@@ -43,10 +43,11 @@ export const Line = styled.div`
 
 export const EventContainer = styled.section`
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(4, 1fr);
   padding-left: 3%;
   margin: 48px 0;
-  column-gap: 88px;
+  column-gap: 56px;
   row-gap: 56px;
   @media(max-width: 1600px){
     grid-template-columns: repeat(3, 1fr);

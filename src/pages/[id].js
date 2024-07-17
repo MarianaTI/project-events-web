@@ -75,7 +75,6 @@ export default function IdEvent() {
     try {
       const response = await guestRepo.create(guestData);
       await fetchEvent();
-      router.reload();
     } catch (error) {
       console.error("Error al crear el invitado:", error);
     }
