@@ -66,6 +66,21 @@ export default function IdEvent() {
     return `${hours}:${minutesStr} ${ampm}`;
   };
 
+  const onSubmit = async () => {
+    const guestData = {
+      id_user: userId,
+      id_event: id,
+    };
+
+    try {
+      const response = await guestRepo.create(guestData);
+      await fetchEvent();
+      router.reload();
+    } catch (error) {
+      console.error("Error al crear el invitado:", error);
+    }
+  };
+
   const fetchEvent = async () => {
     if (id) {
       try {
@@ -144,7 +159,7 @@ export default function IdEvent() {
         </span>
         <Location position={locationCoords} />
         <ButtonsContainer>
-          <ButtonPeople type="button">
+          <ButtonPeople onClick={onSubmit}>
             <FaHeart size={14} />
             Confirmar asistencia
           </ButtonPeople>
@@ -192,9 +207,13 @@ export default function IdEvent() {
                       <div className="mt-2">
                         {/* Contenido */}
                         <ul>
-                          {guest.length > 0 ? guest.map((person, index) => (
-                            <li key={index}>{person.user.fullname}</li>
-                          )) : <li>No hay invitados registrados.</li>}
+                          {guest.length > 0 ? (
+                            guest.map((person, index) => (
+                              <li key={index}>{person.user.fullname}</li>
+                            ))
+                          ) : (
+                            <li>No hay invitados registrados.</li>
+                          )}
                         </ul>
                       </div>
 
