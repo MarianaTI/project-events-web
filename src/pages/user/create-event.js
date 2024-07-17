@@ -67,7 +67,7 @@ export default function CreateEvent() {
           <div>
             <Label>Descripción</Label>
             <Textarea
-              placeholder="Escriba aquí su comentario..."
+              placeholder="Escriba aquí su descripción..."
               fullWidth
               control={control}
               name="description"
@@ -109,7 +109,7 @@ export default function CreateEvent() {
             <MapComponent onLocationChange={setLocation} />
           </div>
           <ButtonContainer>
-            <Button text="Aceptar" type="submit" />
+            <Button text="Guardar información" type="submit" />
           </ButtonContainer>
         </FormStyled>
       </Content>

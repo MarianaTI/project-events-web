@@ -3,7 +3,16 @@ import File from "@/components/File";
 import Input from "@/components/Input";
 import Textarea from "@/components/Textarea";
 import MapComponent from "@/components/Map";
-import { Container, Content, H5Styled, Logo } from "@/styles/AddEvent.style";
+import {
+  ButtonContainer,
+  Container,
+  Content,
+  Flex,
+  FormStyled,
+  H5Styled,
+  Label,
+  Logo,
+} from "@/styles/AddEvent.style";
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -27,7 +36,9 @@ export default function UpdateEvent() {
 
   useEffect(() => {
     if (router.query.id) {
-      const formattedDate = new Date(router.query.date).toISOString().slice(0, 16);
+      const formattedDate = new Date(router.query.date)
+        .toISOString()
+        .slice(0, 16);
       const event = {
         _id: router.query.id,
         title: router.query.title,
@@ -77,21 +88,22 @@ export default function UpdateEvent() {
           <img src="/images/logo.png" />
           <h1>Editar evento</h1>
         </Logo>
-        <H5Styled>Completa</H5Styled>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            control={control}
-            name="title"
-            label="Nombre del evento"
-            fullWidth
-          />
-          <Textarea
-            placeholder="Escriba aquí su comentario..."
-            fullWidth
-            control={control}
-            name="description"
-            commentDesign
-          />
+        <H5Styled>
+          Completa los campos a continuación para actualizar los detalles de tu
+          evento. ¡Queremos asegurarnos de que tu ocasión especial se mantenga
+          destacada y actualizada en nuestro calendario!
+        </H5Styled>
+        <FormStyled onSubmit={handleSubmit(onSubmit)}>
+          <Input control={control} name="title" label="Título" fullWidth />
+          <div>
+            <Label>Descripción</Label>
+            <Textarea
+              placeholder="Escriba aquí su descripción..."
+              fullWidth
+              control={control}
+              name="description"
+            />
+          </div>
           <File
             name="image"
             onChange={(e) => {
@@ -109,18 +121,33 @@ export default function UpdateEvent() {
             ref={fileInputRef}
             // fileName={fileName}
           />
-          <Input
-            control={control}
-            name="date"
-            label="Fecha y hora del evento"
-            type="datetime-local"
-          />
-          <Input control={control} name="cost" label="Costo del evento" />
-          <MapComponent onLocationChange={setLocation} initialPosition={location}/>
+          <Flex>
+            <Input
+              control={control}
+              name="date"
+              label="Fecha y hora"
+              type="datetime-local"
+              fullWidth
+            />
+            <Input
+              control={control}
+              name="cost"
+              label="Precio"
+              fullWidth
+              placeholder="$ 0.00"
+            />
+          </Flex>
           <div>
-            <Button text="Aceptar" type="submit" />
+            <Label>Ubicación</Label>
+            <MapComponent
+              onLocationChange={setLocation}
+              initialPosition={location}
+            />
           </div>
-        </form>
+          <ButtonContainer>
+            <Button text="Guardar información" type="submit" />
+          </ButtonContainer>
+        </FormStyled>
       </Content>
     </Container>
   );
