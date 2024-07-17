@@ -26,11 +26,12 @@ export default function UpdateEvent() {
 
   useEffect(() => {
     if (router.query.id) {
+      const formattedDate = new Date(router.query.date).toISOString().slice(0, 16);
       const event = {
         _id: router.query.id,
         title: router.query.title,
         description: router.query.description,
-        date: router.query.date,
+        date: formattedDate,
         cost: router.query.cost,
         location: router.query.location,
         image: { secureUrl: router.query.image },
