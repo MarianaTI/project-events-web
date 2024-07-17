@@ -48,6 +48,22 @@ export default function IdEvent() {
     setIsOpen(false);
   };
 
+  const navigateToUpdate = () => {
+    router.push({
+      pathname: "/user/update-event",
+      query: {
+        id: selectedEvent._id,
+        title: selectedEvent.title,
+        description: selectedEvent.description,
+        date: selectedEvent.date,
+        cost: selectedEvent.cost,
+        location: selectedEvent.location,
+        image: selectedEvent.image.secureUrl,
+      },
+    });
+  }
+  
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate();
@@ -172,7 +188,7 @@ export default function IdEvent() {
             Ver invitados
           </ButtonPeople>
           <div style={{ display: "flex", gap: "12px" }}>
-            <ButtonPeople style={{backgroundColor: "#E7B10A"}}>Editar</ButtonPeople>
+            <ButtonPeople style={{backgroundColor: "#E7B10A"}} onClick={navigateToUpdate}>Editar</ButtonPeople>
             <ButtonPeople style={{backgroundColor: "#C40C0C"}} onClick={() => handleDelete(selectedEvent._id)}>Eliminar</ButtonPeople>
           </div>
 

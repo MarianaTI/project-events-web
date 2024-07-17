@@ -9,7 +9,7 @@ import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-export default function AddEvent() {
+export default function CreateEvent() {
   const userId = useSelector((state) => state.user._id);
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef(null);

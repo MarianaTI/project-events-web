@@ -32,8 +32,8 @@ export default function Event() {
     });
   };
 
-  const navigateToAdd = () => {
-    router.push("/addEvent");
+  const navigateToCreate = () => {
+    router.push("/user/create-event");
   }
 
   const formatDate = (dateString) => {
@@ -75,7 +75,7 @@ export default function Event() {
     <Container>
       {/* <H1Styled>Eventos {name}</H1Styled> */}
       <ButtonContainer>
-        <ButtonStyled onClick={navigateToAdd}>Agregar evento</ButtonStyled>
+        <ButtonStyled onClick={navigateToCreate}>Agregar evento</ButtonStyled>
       </ButtonContainer>
       <EventsContent>
         <Title>
