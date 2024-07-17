@@ -15,6 +15,7 @@ export default function UpdateEvent() {
   const router = useRouter();
   const userId = useSelector((state) => state.user._id);
   const [imageUrl, setImageUrl] = useState("");
+  // const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
   const [location, setLocation] = useState(null);
   const {
@@ -38,6 +39,7 @@ export default function UpdateEvent() {
       };
       reset(event);
       setImageUrl(event.image.secureUrl);
+      // setFileName(event.image.secureUrl.split('/').pop());
       setLocation(event.location.split(",").map((coord) => parseFloat(coord)));
     }
   }, [router.query, reset]);
@@ -101,9 +103,11 @@ export default function UpdateEvent() {
                   setImageUrl(reader.result);
                 };
                 reader.readAsDataURL(file);
+                // setFileName(file.name);
               }
             }}
             ref={fileInputRef}
+            // fileName={fileName}
           />
           <Input
             control={control}
