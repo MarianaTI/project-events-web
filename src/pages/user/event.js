@@ -20,6 +20,7 @@ import GetAllEventUseCase from "@/application/usecases/eventUseCase/GetAllEventU
 export default function Event() {
   const router = useRouter();
   const userId = useSelector((state) => state.user._id);
+    const name = useSelector((state) => state.user.name);
   const [events, setEvents] = useState([]);
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
@@ -30,6 +31,7 @@ export default function Event() {
       query: { id: id },
     });
   };
+
 
   const navigateToAdd = () => {
     router.push("/addEvent");
@@ -72,7 +74,7 @@ export default function Event() {
 
   return (
     <Container>
-      <H1Styled>Eventos</H1Styled>
+      {/* <H1Styled>Eventos {name}</H1Styled> */}
       <ButtonContainer>
         <ButtonStyled onClick={navigateToAdd}>Agregar evento</ButtonStyled>
       </ButtonContainer>

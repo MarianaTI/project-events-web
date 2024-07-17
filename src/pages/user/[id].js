@@ -19,6 +19,7 @@ import GetOneEventUseCase from "@/application/usecases/eventUseCase/GetOneEventU
 import dynamic from "next/dynamic";
 import GuestRepo from "@/infraestructure/implementation/httpRequest/axios/GuestRepo";
 import GetOneGuestUseCase from "@/application/usecases/guestUseCase/GetOneGuestUseCase";
+import DeleteEventUseCase from "@/application/usecases/eventUseCase/DeleteEventUseCase";
 
 const Location = dynamic(() => import("@/components/Location/Location"), {
   ssr: false,
@@ -34,6 +35,7 @@ export default function IdEvent() {
   const [locationName, setLocationName] = useState("");
   const eventRepo = new EventRepo();
   const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
+  const deleteEventUseCase = new DeleteEventUseCase(eventRepo);
 
   const guestRepo = new GuestRepo();
   const getGuestUseCase = new GetOneGuestUseCase(guestRepo);
@@ -73,7 +75,7 @@ export default function IdEvent() {
 
     try {
       const response = await guestRepo.create(guestData);
-      await fetchEvent();
+      router.push("/user/event");
     } catch (error) {
       console.error("Error al crear el invitado:", error);
     }
@@ -92,6 +94,15 @@ export default function IdEvent() {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const handleDelete = async (_id) => {
+    try {
+      const response = await deleteEventUseCase.run(_id, userId);
+      router.push("/user/event")
+    } catch (error) {
+      console.error("Error al eliminar el event:", error);
     }
   };
 
@@ -160,13 +171,9 @@ export default function IdEvent() {
             <IoMdEye size={18} />
             Ver invitados
           </ButtonPeople>
-          <div style={{display: "flex", gap: "12px"}}>
-            <ButtonPeople onClick={onSubmit}>
-              Editar
-            </ButtonPeople>
-            <ButtonPeople onClick={onSubmit}>
-              Eliminar
-            </ButtonPeople>
+          <div style={{ display: "flex", gap: "12px" }}>
+            <ButtonPeople onClick={onSubmit}>Editar</ButtonPeople>
+            <ButtonPeople onClick={() => handleDelete(selectedEvent._id)}>Eliminar</ButtonPeople>
           </div>
 
           <Transition appear show={isOpen} as={Fragment}>

@@ -8,6 +8,7 @@ class EventRepo extends IEventRepo {
     this.url = "http://localhost:3000/api/events/";
     this.urlId = "http://localhost:3000/api/events/";
     this.urlPost = "http://localhost:3000/api/event/post";
+    this.urlDelete = "http://localhost:3000/api/event/delete/";
   }
 
   async getAll() {
@@ -51,6 +52,18 @@ class EventRepo extends IEventRepo {
       console.error("Error al crear el event:", error);
       throw error;
     }
+  }
+
+  async delete(_id, userId) {
+    const response = await axios.delete(`${this.urlDelete}${_id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: {
+        userId: userId,
+      },
+    });
+    return response.data;
   }
 }
 
