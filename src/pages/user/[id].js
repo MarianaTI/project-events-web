@@ -172,8 +172,8 @@ export default function IdEvent() {
             Ver invitados
           </ButtonPeople>
           <div style={{ display: "flex", gap: "12px" }}>
-            <ButtonPeople onClick={onSubmit}>Editar</ButtonPeople>
-            <ButtonPeople onClick={() => handleDelete(selectedEvent._id)}>Eliminar</ButtonPeople>
+            <ButtonPeople style={{backgroundColor: "#E7B10A"}}>Editar</ButtonPeople>
+            <ButtonPeople style={{backgroundColor: "#C40C0C"}} onClick={() => handleDelete(selectedEvent._id)}>Eliminar</ButtonPeople>
           </div>
 
           <Transition appear show={isOpen} as={Fragment}>

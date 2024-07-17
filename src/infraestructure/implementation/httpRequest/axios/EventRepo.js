@@ -8,6 +8,7 @@ class EventRepo extends IEventRepo {
     this.url = "http://localhost:3000/api/events/";
     this.urlId = "http://localhost:3000/api/events/";
     this.urlPost = "http://localhost:3000/api/event/post";
+    this.urlPut = "http://localhost:3000/api/event/update/";
     this.urlDelete = "http://localhost:3000/api/event/delete/";
   }
 
@@ -51,6 +52,28 @@ class EventRepo extends IEventRepo {
     } catch (error) {
       console.error("Error al crear el event:", error);
       throw error;
+    }
+  }
+
+  async update(event) {
+    try {
+      const formData = new FormData();
+      formData.append("id_user", event.id_user);
+      formData.append("title", event.title);
+      formData.append("description", event.description);
+      formData.append("image", event.image);
+      formData.append("date", event.date);
+      formData.append("cost", event.cost);
+      formData.append("location", event.location);
+      const response = await axios.put(`${this.urlPut}${event._id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          id_user: this.id_user,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error al actualizar el evento:", error);
     }
   }
 

@@ -32,7 +32,6 @@ export default function Event() {
     });
   };
 
-
   const navigateToAdd = () => {
     router.push("/addEvent");
   }
