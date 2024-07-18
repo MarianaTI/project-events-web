@@ -9,7 +9,7 @@ import {
 } from "@/styles/Id.style";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { MdLocationOn } from "react-icons/md";
-import { FaClock, FaHeart } from "react-icons/fa6";
+import { FaClock } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoMdEye } from "react-icons/io";
@@ -61,8 +61,7 @@ export default function IdEvent() {
         image: selectedEvent.image.secureUrl,
       },
     });
-  }
-  
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -81,20 +80,6 @@ export default function IdEvent() {
     hours = hours ? hours : 12;
     const minutesStr = minutes < 10 ? "0" + minutes : minutes;
     return `${hours}:${minutesStr} ${ampm}`;
-  };
-
-  const onSubmit = async () => {
-    const guestData = {
-      id_user: userId,
-      id_event: id,
-    };
-
-    try {
-      const response = await guestRepo.create(guestData);
-      router.push("/user/event");
-    } catch (error) {
-      console.error("Error al crear el invitado:", error);
-    }
   };
 
   const fetchEvent = async () => {
@@ -116,7 +101,7 @@ export default function IdEvent() {
   const handleDelete = async (_id) => {
     try {
       const response = await deleteEventUseCase.run(_id, userId);
-      router.push("/user/event")
+      router.push("/user/event");
     } catch (error) {
       console.error("Error al eliminar el event:", error);
     }
@@ -188,9 +173,20 @@ export default function IdEvent() {
             Ver invitados
           </ButtonPeople>
           <div style={{ display: "flex", gap: "12px" }}>
-            <ButtonPeople style={{backgroundColor: "#E7B10A"}} onClick={navigateToUpdate}>Editar</ButtonPeople>
-            <ButtonPeople style={{backgroundColor: "#C40C0C"}} onClick={() => handleDelete(selectedEvent._id)}>Cancelar</ButtonPeople>
+            <ButtonPeople
+              style={{ backgroundColor: "#E7B10A" }}
+              onClick={navigateToUpdate}
+            >
+              Editar
+            </ButtonPeople>
+            <ButtonPeople
+              style={{ backgroundColor: "#C40C0C" }}
+              onClick={() => handleDelete(selectedEvent._id)}
+            >
+              Cancelar
+            </ButtonPeople>
           </div>
+
           <Transition appear show={isOpen} as={Fragment}>
             <Dialog
               as="div"

@@ -22,7 +22,7 @@ export default function Event() {
   const userId = useSelector((state) => state.user._id);
   const name = useSelector((state) => state.user.name);
   const [events, setEvents] = useState([]);
-  const [eventType, setEventType] = useState("activos");
+  const [eventType, setEventType] = useState("todos");
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
 
@@ -63,12 +63,12 @@ export default function Event() {
         const fetchedEvents = response.response.events.filter(
           (event) => event.user._id === userId
         );
-        
+
         let filteredEvents = [];
         switch (eventType) {
           case "activos":
             filteredEvents = fetchedEvents.filter(
-              (event) => event.b_activo === true && event.b_cancelado === false
+              (event) => event.b_activo === true && event.b_cancelado === false && event.b_concluido === true
             );
             break;
           case "inactivos":
@@ -101,25 +101,20 @@ export default function Event() {
 
   return (
     <Container>
-      <ButtonContainer>
-        <ButtonStyled onClick={navigateToCreate}>Agregar evento</ButtonStyled>
-      </ButtonContainer>
       <EventsContent>
         <Title>
           <FaFire size={24} color="#122088" />
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
+        <ButtonContainer>
+          <ButtonStyled onClick={navigateToCreate}>Agregar evento</ButtonStyled>
+        </ButtonContainer>
         <Categories>
-          <CatButton onClick={() => setEventType("activos")}>Activos</CatButton>
-          <CatButton onClick={() => setEventType("inactivos")}>
-            Inactivos
-          </CatButton>
-          <CatButton onClick={() => setEventType("cancelados")}>
-            Cancelados
-          </CatButton>
-          <CatButton onClick={() => setEventType("concluidos")}>
-            Concluidos
-          </CatButton>
+        <CatButton active={eventType === "todos"} onClick={() => setEventType("todos")}>Todos</CatButton>
+        <CatButton active={eventType === "activos"} onClick={() => setEventType("activos")}>Activos</CatButton>
+        <CatButton active={eventType === "inactivos"} onClick={() => setEventType("inactivos")}>Inactivos</CatButton>
+        <CatButton active={eventType === "cancelados"} onClick={() => setEventType("cancelados")}>Cancelados</CatButton>
+        <CatButton active={eventType === "concluidos"} onClick={() => setEventType("concluidos")}>Concluidos</CatButton>
         </Categories>
         <div>
           {events.length === 0 ? (

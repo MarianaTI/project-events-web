@@ -13,6 +13,7 @@ export const H1Styled = styled.h1`
 
 export const ButtonContainer = styled.div`
   margin: 24px 16px;
+  width: 95%;
   display: flex;
   justify-content: end;
 `;
@@ -79,9 +80,9 @@ export const CatButton = styled.button`
   padding: 6px 12px;
   border-radius: 25px;
   font-size: 12px;
-  color: var(--default);
   font-weight: 600;
-  color: #122088;
+  color: ${({ active }) => (active ? 'var(--neutral)' : '#122088')};
+  background-color: ${({ active }) => (active ? '#122088' : 'transparent')};  
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
 :hover {
