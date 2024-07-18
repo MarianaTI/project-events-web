@@ -30,24 +30,30 @@ export default function DateComponent() {
         const response = await getAllEventUseCase.run();
         const fetchedEvents = response.response.events;
 
-        const activeEvents = fetchedEvents.filter(event => event.b_activo);
-
-        const formattedEvents = activeEvents.map((event) => ({
+        const filteredEvents = fetchedEvents.filter(
+          (event) =>
+            event.b_activo === true &&
+            event.b_cancelado === false &&
+            event.b_concluido === true
+        );
+  
+        const formattedEvents = filteredEvents.map((event) => ({
           id: event._id,
           title: event.title,
           start: new Date(event.date),
           end: new Date(new Date(event.date).getTime() + 60 * 60 * 1000), // suponer una duración de 1 hora
           allDay: false,
         }));
-
+  
         setEvents(formattedEvents);
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching events: ", error);
       }
     };
-
+  
     fetchEvents();
   }, []);
+  
 
   const eventPropGetter = (event) => {
     const backgroundColor = event.id % 2 === 0 ? "#a684d6" : "#5b0888"; // Ejemplo: color diferente para eventos pares e impares

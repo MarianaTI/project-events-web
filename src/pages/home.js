@@ -60,7 +60,7 @@ export default function Home() {
             switch (eventType) {
                 case "activos":
                     filteredEvents = fetchedEvents.filter(
-                        (event) => event.b_activo === true && event.b_cancelado === false
+                      (event) => event.b_activo === true && event.b_cancelado === false && event.b_concluido === true
                     );
                     break;
                 case "inactivos":
