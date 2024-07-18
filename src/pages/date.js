@@ -1,10 +1,13 @@
 import GetAllEventUseCase from "@/application/usecases/eventUseCase/GetAllEventUseCase";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
+import { Container, Content } from "@/styles/Date.style";
+import { Title } from "@/styles/Event.style";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { BsCalendar2CheckFill } from "react-icons/bs";
 
 const localizer = momentLocalizer(moment);
 
@@ -14,23 +17,11 @@ export default function DateComponent() {
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate();
-    const month = date.toLocaleDateString("es-ES", { month: "long" });
-    const year = date.getFullYear();
-    return `${day} ${month}, ${year}`;
-  };
-
-  const formatTime = (dateString) => {
-    const date = new Date(dateString);
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? "pm" : "am";
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    const minutesStr = minutes < 10 ? "0" + minutes : minutes;
-    return `${hours}:${minutesStr} ${ampm}`;
+  const navigateToEvent = (id) => {
+    return router.push({
+      pathname: "/[id]",
+      query: { id: id },
+    });
   };
 
   useEffect(() => {
@@ -39,12 +30,12 @@ export default function DateComponent() {
         const response = await getAllEventUseCase.run();
         const fetchedEvents = response.response.events;
 
-        const formattedEvents = fetchedEvents.map(event => ({
+        const formattedEvents = fetchedEvents.map((event) => ({
           id: event._id,
           title: event.title,
           start: new Date(event.date),
           end: new Date(new Date(event.date).getTime() + 60 * 60 * 1000), // suponer una duración de 1 hora
-          allDay: false
+          allDay: false,
         }));
 
         setEvents(formattedEvents);
@@ -56,15 +47,29 @@ export default function DateComponent() {
     fetchEvents();
   }, []);
 
-  return <div>
-  <h2>Calendario de Eventos</h2>
-  <Calendar
-    localizer={localizer}
-    events={events}
-    startAccessor="start"
-    endAccessor="end"
-    style={{ height: 500 }}
-    //onSelectEvent={event => navigateToEvent(event.id)}
-  />
-</div>;
+  const eventPropGetter = (event) => {
+    const backgroundColor = event.id % 2 === 0 ? "#a684d6" : "#5b0888"; // Ejemplo: color diferente para eventos pares e impares
+    return { style: { backgroundColor } };
+  };
+
+  return (
+    <Container>
+      <Content>
+        <Title>
+          <BsCalendar2CheckFill size={24} color="#122088" />
+          <h1>Calendarios de eventos</h1>
+        </Title>
+        <Calendar
+          localizer={localizer}
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: "75vh"}}
+          onSelectEvent={(event) => navigateToEvent(event.id)}
+          views={['month', 'week', 'day']}
+          eventPropGetter={eventPropGetter}
+        />
+      </Content>
+    </Container>
+  );
 }
