@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [events, setEvents] = useState([]);
-  const [eventType, setEventType] = useState('activos');
+  const [eventType, setEventType] = useState("activos");
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
 
@@ -54,9 +54,34 @@ export default function Home() {
     const fetchEvents = async () => {
       try {
         const response = await getAllEventUseCase.run();
-        const filteredEvents = response.response.events.filter(
-          (event) => event.b_activo === true
-        );
+        const fetchedEvents = response.response.events;
+
+        let filteredEvents = [];
+        switch (eventType) {
+          case "activos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_activo === true
+            );
+            break;
+          case "inactivos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_activo === false
+            );
+            break;
+          case "cancelados":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_cancelado === true
+            );
+            break;
+          case "concluidos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_concluido === true
+            );
+            break;
+          default:
+            filteredEvents = fetchedEvents;
+        }
+
         setEvents(filteredEvents);
       } catch (error) {
         console.log(error);
@@ -64,7 +89,7 @@ export default function Home() {
     };
 
     fetchEvents();
-  }, []);
+  }, [eventType]);
 
   return (
     <Container>
@@ -83,14 +108,20 @@ export default function Home() {
           emocionantes.
         </span>
         <Categories>
-          <CatButton>Activos</CatButton>
-          <CatButton>Inactivos</CatButton>
-          <CatButton>Cancelados</CatButton>
-          <CatButton>Concluidos</CatButton>
+          <CatButton onClick={() => setEventType("activos")}>Activos</CatButton>
+          <CatButton onClick={() => setEventType("inactivos")}>
+            Inactivos
+          </CatButton>
+          <CatButton onClick={() => setEventType("cancelados")}>
+            Cancelados
+          </CatButton>
+          <CatButton onClick={() => setEventType("concluidos")}>
+            Concluidos
+          </CatButton>
         </Categories>
         <div>
           {events.length === 0 ? (
-            <div style={{ textAlign: "center", marginTop: 80 }}>
+            <div style={{ textAlign: "center", height: 400, display: "flex", alignItems: "center" }}>
               <span>No hay eventos disponibles</span>
             </div>
           ) : (
