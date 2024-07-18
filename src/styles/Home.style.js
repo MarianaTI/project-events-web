@@ -45,9 +45,9 @@ export const EventContainer = styled.section`
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
-  padding-left: 3%;
+  padding-left: 5%;
   margin: 48px 0;
-  column-gap: 56px;
+  width: 95vw;
   row-gap: 56px;
   @media(max-width: 1600px){
     grid-template-columns: repeat(3, 1fr);

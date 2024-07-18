@@ -59,7 +59,7 @@ export const EventContainer = styled.section`
 export const Categories = styled.div`
   display: flex;
   gap: 16px;
-  width: 80%;
+  width: 90%;
   margin: 16px 0;
   @media (max-width: 1600px) {
     width: 71%;

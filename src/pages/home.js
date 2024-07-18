@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [events, setEvents] = useState([]);
+  const [eventType, setEventType] = useState('activos');
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
 
@@ -53,7 +54,10 @@ export default function Home() {
     const fetchEvents = async () => {
       try {
         const response = await getAllEventUseCase.run();
-        setEvents(response.response.events);
+        const filteredEvents = response.response.events.filter(
+          (event) => event.b_activo === true
+        );
+        setEvents(filteredEvents);
       } catch (error) {
         console.log(error);
       }
@@ -79,7 +83,6 @@ export default function Home() {
           emocionantes.
         </span>
         <Categories>
-          <CatButton>Todos</CatButton>
           <CatButton>Activos</CatButton>
           <CatButton>Inactivos</CatButton>
           <CatButton>Cancelados</CatButton>
@@ -108,34 +111,6 @@ export default function Home() {
           )}
         </div>
       </NewEvents>
-      {/* <AllEvents>
-        <Title>
-          <FaFire size={24} color="#5b0888" />
-          <H1Styled>Todos los eventos</H1Styled>
-        </Title>
-        <div>
-          {events.length === 0 ? (
-            <div style={{ textAlign: "center" }}>
-              <span>No hay eventos disponibles</span>
-            </div>
-          ) : (
-            <EventContainer>
-              {events.map((event, index) => (
-                <Card
-                  key={index}
-                  name={event.title}
-                  image={event.image.secureUrl}
-                  time={formatTime(event.date)}
-                  date={formatDate(event.date)}
-                  description={event.description}
-                  price={event.cost}
-                  onClick={() => navigateToEvent(event._id)}
-                />
-              ))}
-            </EventContainer>
-          )}
-        </div>
-      </AllEvents> */}
     </Container>
   );
 }
