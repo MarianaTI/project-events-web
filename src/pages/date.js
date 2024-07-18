@@ -30,7 +30,9 @@ export default function DateComponent() {
         const response = await getAllEventUseCase.run();
         const fetchedEvents = response.response.events;
 
-        const formattedEvents = fetchedEvents.map((event) => ({
+        const activeEvents = fetchedEvents.filter(event => event.b_activo);
+
+        const formattedEvents = activeEvents.map((event) => ({
           id: event._id,
           title: event.title,
           start: new Date(event.date),
