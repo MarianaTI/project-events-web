@@ -9,7 +9,7 @@ import {
 } from "@/styles/Id.style";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { MdLocationOn } from "react-icons/md";
-import { FaClock, FaHeart } from "react-icons/fa6";
+import { FaClock, FaHeart, FaRegHeart } from "react-icons/fa6";
 import { FaCalendar } from "react-icons/fa";
 import { Dialog, Transition } from "@headlessui/react";
 import { IoMdEye } from "react-icons/io";
@@ -32,6 +32,7 @@ export default function IdEvent() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [guest, setGuest] = useState([]);
   const [locationName, setLocationName] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const eventRepo = new EventRepo();
   const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
 
@@ -45,6 +46,14 @@ export default function IdEvent() {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    // Cargar el estado confirmado desde localStorage al montar el componente
+    const confirmedStatus = localStorage.getItem(`confirmed_${id}`);
+    if (confirmedStatus === "true") {
+      setIsConfirmed(true);
+    }
+  }, [id]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -66,6 +75,7 @@ export default function IdEvent() {
   };
 
   const onSubmit = async () => {
+    if (isConfirmed) return;
     const guestData = {
       id_user: userId,
       id_event: id,
@@ -73,7 +83,9 @@ export default function IdEvent() {
 
     try {
       const response = await guestRepo.create(guestData);
-      await fetchEvent();
+      setIsConfirmed(true);
+      localStorage.setItem(`confirmed_${id}`, "true");
+      router.reload();
     } catch (error) {
       console.error("Error al crear el invitado:", error);
     }
@@ -157,8 +169,8 @@ export default function IdEvent() {
         <Location position={locationCoords} />
         <ButtonsContainer>
           <ButtonPeople onClick={onSubmit}>
-            <FaHeart size={14} />
-            Confirmar asistencia
+          {isConfirmed ? <FaHeart size={14} /> : <FaRegHeart size={14} />}
+          {isConfirmed ? "Asistencia confirmada" : "Confirmar asistencia"}
           </ButtonPeople>
           <ButtonPeople type="button" onClick={openModal}>
             <IoMdEye size={18} />
