@@ -52,44 +52,44 @@ export default function Home() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      try {
-        const response = await getAllEventUseCase.run();
-        const fetchedEvents = response.response.events;
+        try {
+            const response = await getAllEventUseCase.run();
+            const fetchedEvents = response.response.events;
 
-        let filteredEvents = [];
-        switch (eventType) {
-          case "activos":
-            filteredEvents = fetchedEvents.filter(
-              (event) => event.b_activo === true
-            );
-            break;
-          case "inactivos":
-            filteredEvents = fetchedEvents.filter(
-              (event) => event.b_activo === false
-            );
-            break;
-          case "cancelados":
-            filteredEvents = fetchedEvents.filter(
-              (event) => event.b_cancelado === true
-            );
-            break;
-          case "concluidos":
-            filteredEvents = fetchedEvents.filter(
-              (event) => event.b_concluido === true
-            );
-            break;
-          default:
-            filteredEvents = fetchedEvents;
+            let filteredEvents = [];
+            switch (eventType) {
+                case "activos":
+                    filteredEvents = fetchedEvents.filter(
+                        (event) => event.b_activo === true && event.b_cancelado === false
+                    );
+                    break;
+                case "inactivos":
+                    filteredEvents = fetchedEvents.filter(
+                        (event) => event.b_activo === false
+                    );
+                    break;
+                case "cancelados":
+                    filteredEvents = fetchedEvents.filter(
+                        (event) => event.b_cancelado === true
+                    );
+                    break;
+                case "concluidos":
+                    filteredEvents = fetchedEvents.filter(
+                        (event) => event.b_concluido === true
+                    );
+                    break;
+                default:
+                    filteredEvents = fetchedEvents;
+            }
+
+            setEvents(filteredEvents);
+        } catch (error) {
+            console.log(error);
         }
-
-        setEvents(filteredEvents);
-      } catch (error) {
-        console.log(error);
-      }
     };
 
     fetchEvents();
-  }, [eventType]);
+}, [eventType]);
 
   return (
     <Container>
