@@ -20,7 +20,7 @@ import GetAllEventUseCase from "@/application/usecases/eventUseCase/GetAllEventU
 export default function Event() {
   const router = useRouter();
   const userId = useSelector((state) => state.user._id);
-    const name = useSelector((state) => state.user.name);
+  const name = useSelector((state) => state.user.name);
   const [events, setEvents] = useState([]);
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
@@ -34,7 +34,7 @@ export default function Event() {
 
   const navigateToCreate = () => {
     router.push("/user/create-event");
-  }
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -89,20 +89,28 @@ export default function Event() {
           <CatButton>Cancelados</CatButton>
           <CatButton>Concluidos</CatButton>
         </Categories>
-        <EventContainer>
-          {events.map((event, index) => (
+        <div>
+          {events.length === 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <span>No has creado ningun evento hasta el momento</span>
+            </div>
+          ) : (
+            <EventContainer>
+              {events.map((event, index) => (
                 <Card
-                key={index}
-                name={event.title}
-                image={event.image.secureUrl}
-                time={formatTime(event.date)}
-                date={formatDate(event.date)}
-                description={event.description}
-                price={event.cost}
-                onClick={() => navigateToEvent(event._id)}
-              />
-          ))}
-        </EventContainer>
+                  key={index}
+                  name={event.title}
+                  image={event.image.secureUrl}
+                  time={formatTime(event.date)}
+                  date={formatDate(event.date)}
+                  description={event.description}
+                  price={event.cost}
+                  onClick={() => navigateToEvent(event._id)}
+                />
+              ))}
+            </EventContainer>
+          )}
+        </div>
       </EventsContent>
     </Container>
   );
