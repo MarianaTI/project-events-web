@@ -33,6 +33,7 @@ export default function IdEvent() {
   const [guest, setGuest] = useState([]);
   const [locationName, setLocationName] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [totalGuests, setTotalGuests] = useState(0);
   const eventRepo = new EventRepo();
   const getOneEventUseCase = new GetOneEventUseCase(eventRepo);
 
@@ -112,6 +113,7 @@ export default function IdEvent() {
       try {
         const response = await getGuestUseCase.run(id);
         setGuest(response.event);
+        setTotalGuests(response.total);
       } catch (error) {
         console.log(error);
       }
@@ -174,7 +176,7 @@ export default function IdEvent() {
           </ButtonPeople>
           <ButtonPeople type="button" onClick={openModal}>
             <IoMdEye size={18} />
-            Ver invitados
+            Ver invitados ({totalGuests})
           </ButtonPeople>
 
           <Transition appear show={isOpen} as={Fragment}>
