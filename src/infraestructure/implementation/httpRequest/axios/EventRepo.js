@@ -42,6 +42,7 @@ class EventRepo extends IEventRepo {
       formData.append("date", event.date);
       formData.append("cost", event.cost);
       formData.append("location", event.location);
+      formData.append("b_concluido", event.b_concluido);
       const response = await axios.post(this.urlPost, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -65,6 +66,9 @@ class EventRepo extends IEventRepo {
       formData.append("date", event.date);
       formData.append("cost", event.cost);
       formData.append("location", event.location);
+      // formData.append("b_activo", event.b_activo);
+      // formData.append("b_cancelado", event.b_cancelado);
+      // formData.append("b_concluido", event.b_concluido);
       const response = await axios.put(`${this.urlPut}${event._id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

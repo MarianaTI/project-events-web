@@ -189,7 +189,7 @@ export default function IdEvent() {
           </ButtonPeople>
           <div style={{ display: "flex", gap: "12px" }}>
             <ButtonPeople style={{backgroundColor: "#E7B10A"}} onClick={navigateToUpdate}>Editar</ButtonPeople>
-            <ButtonPeople style={{backgroundColor: "#C40C0C"}} onClick={() => handleDelete(selectedEvent._id)}>Eliminar</ButtonPeople>
+            <ButtonPeople style={{backgroundColor: "#C40C0C"}} onClick={() => handleDelete(selectedEvent._id)}>Cancelar</ButtonPeople>
           </div>
 
           <Transition appear show={isOpen} as={Fragment}>

@@ -40,6 +40,7 @@ export default function CreateEvent() {
       image: file,
       id_user: userId,
       location,
+      b_concluido: false
     };
 
     try {
