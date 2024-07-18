@@ -86,6 +86,7 @@ const Navbar = () => {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <StyledLink href="/home">Home</StyledLink>
+          <StyledLink href="/date">Calendario</StyledLink>
           <StyledLink href="/user/event">Eventos</StyledLink>
           <ButtonStyled onClick={handleSignOut}>
             Salir <span aria-hidden="true">&rarr;</span>
@@ -135,6 +136,12 @@ const Navbar = () => {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Home
+                </a>
+                <a
+                  href="/date"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
+                  Calendario
                 </a>
                 <a
                   href="/user/event"
