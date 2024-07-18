@@ -22,6 +22,7 @@ export default function Event() {
   const userId = useSelector((state) => state.user._id);
   const name = useSelector((state) => state.user.name);
   const [events, setEvents] = useState([]);
+  const [eventType, setEventType] = useState("activos");
   const eventRepo = new EventRepo();
   const getAllEventUseCase = new GetAllEventUseCase(eventRepo);
 
@@ -59,9 +60,36 @@ export default function Event() {
     const fetchEvents = async () => {
       try {
         const response = await getAllEventUseCase.run();
-        const filteredEvents = response.response.events.filter(
+        const fetchedEvents = response.response.events.filter(
           (event) => event.user._id === userId
         );
+        
+        let filteredEvents = [];
+        switch (eventType) {
+          case "activos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_activo === true && event.b_cancelado === false
+            );
+            break;
+          case "inactivos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_activo === false
+            );
+            break;
+          case "cancelados":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_cancelado === true
+            );
+            break;
+          case "concluidos":
+            filteredEvents = fetchedEvents.filter(
+              (event) => event.b_concluido === true
+            );
+            break;
+          default:
+            filteredEvents = fetchedEvents;
+        }
+
         setEvents(filteredEvents);
       } catch (error) {
         console.log(error);
@@ -69,11 +97,10 @@ export default function Event() {
     };
 
     fetchEvents();
-  }, []);
+  }, [eventType, userId]);
 
   return (
     <Container>
-      {/* <H1Styled>Eventos {name}</H1Styled> */}
       <ButtonContainer>
         <ButtonStyled onClick={navigateToCreate}>Agregar evento</ButtonStyled>
       </ButtonContainer>
@@ -82,7 +109,18 @@ export default function Event() {
           <FaFire size={24} color="#122088" />
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
-        
+        <Categories>
+          <CatButton onClick={() => setEventType("activos")}>Activos</CatButton>
+          <CatButton onClick={() => setEventType("inactivos")}>
+            Inactivos
+          </CatButton>
+          <CatButton onClick={() => setEventType("cancelados")}>
+            Cancelados
+          </CatButton>
+          <CatButton onClick={() => setEventType("concluidos")}>
+            Concluidos
+          </CatButton>
+        </Categories>
         <div>
           {events.length === 0 ? (
             <div style={{ textAlign: "center", marginTop: 80 }}>

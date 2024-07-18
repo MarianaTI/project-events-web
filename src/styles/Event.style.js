@@ -46,13 +46,21 @@ export const Title = styled.div`
 
 export const EventContainer = styled.section`
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(4, 1fr);
-  padding-left: 3%;
-  margin: 32px 0;
-  column-gap: 88px;
+  padding-left: 5%;
+  margin: 48px 0;
+  width: 95vw;
   row-gap: 56px;
-  @media (max-width: 1600px) {
+  @media(max-width: 1600px){
     grid-template-columns: repeat(3, 1fr);
+  }
+  h1{
+    margin: 0;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: var(--default);
   }
 `;
 
