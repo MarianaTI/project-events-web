@@ -11,7 +11,7 @@ import { FiCalendar } from "react-icons/fi";
 import { event } from "../../constants";
 import Parallax from "@/components/Parallax";
 import { useRouter } from "next/router";
-import { H1Styled, Title } from "@/styles/Event.style";
+import { CatButton, Categories, H1Styled, Title } from "@/styles/Event.style";
 import { FaFire } from "react-icons/fa6";
 import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventRepo";
 import GetAllEventUseCase from "@/application/usecases/eventUseCase/GetAllEventUseCase";
@@ -78,9 +78,16 @@ export default function Home() {
           No te pierdas la oportunidad de participar en experiencias únicas y
           emocionantes.
         </span>
+        <Categories>
+          <CatButton>Todos</CatButton>
+          <CatButton>Activos</CatButton>
+          <CatButton>Inactivos</CatButton>
+          <CatButton>Cancelados</CatButton>
+          <CatButton>Concluidos</CatButton>
+        </Categories>
         <div>
           {events.length === 0 ? (
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center", marginTop: 80 }}>
               <span>No hay eventos disponibles</span>
             </div>
           ) : (

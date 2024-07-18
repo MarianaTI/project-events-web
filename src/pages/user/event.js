@@ -82,16 +82,10 @@ export default function Event() {
           <FaFire size={24} color="#122088" />
           <H1Styled>Disfruta nuestros eventos</H1Styled>
         </Title>
-        <Categories>
-          <CatButton>Todos</CatButton>
-          <CatButton>Activos</CatButton>
-          <CatButton>Inactivos</CatButton>
-          <CatButton>Cancelados</CatButton>
-          <CatButton>Concluidos</CatButton>
-        </Categories>
+        
         <div>
           {events.length === 0 ? (
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: "center", marginTop: 80 }}>
               <span>No has creado ningun evento hasta el momento</span>
             </div>
           ) : (
