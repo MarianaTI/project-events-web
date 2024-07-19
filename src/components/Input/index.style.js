@@ -40,7 +40,7 @@ export const IconWrapper = styled.div`
   position: absolute;
   right: 15px;
   top: 55%;
-  transform: translateY(-48%);
+  transform: translateY(-60%);
   font-size: 20px;
   cursor: pointer;
   color: var(--tertiary-inverse);

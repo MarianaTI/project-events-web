@@ -10,11 +10,13 @@ import {
   RegisterStyled,
 } from "@/styles/Login.style";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 
 export default function Register() {
   const route = useRouter();
+  const [isShowPassword, setShowPassword] = useState(false);
   const {
     control,
     handleSubmit,
@@ -28,8 +30,18 @@ export default function Register() {
     },
   });
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!isShowPassword);
+  };
+
   const onSubmit = async (data) => {
-    const user = new User(null, data.name, data.lastname, data.email, data.password);
+    const user = new User(
+      null,
+      data.name,
+      data.lastname,
+      data.email,
+      data.password
+    );
     const userRepo = new UserRepo();
     const signUpUserUseCase = new SignUpUserUseCase(userRepo);
 
@@ -45,7 +57,7 @@ export default function Register() {
   return (
     <Container>
       <RegisterStyled>
-        <img src="/images/logo.png" alt="logo"/>
+        <img src="/images/logo.png" alt="logo" />
         <div>
           <h1>Regístrate</h1>
           <p>Hola! Gracias por estar aquí ✌️</p>
@@ -62,8 +74,16 @@ export default function Register() {
             control={control}
             name="password"
             label="Contraseña"
+            type={isShowPassword ? "text" : "password"}
+            icon={
+              isShowPassword ? (
+                <IoEyeOffSharp onClick={togglePasswordVisibility} />
+              ) : (
+                <IoEyeSharp onClick={togglePasswordVisibility} />
+              )
+            }
           />
-          <Button text="Registrarse" type="submit"/>
+          <Button text="Registrarse" type="submit" />
         </FormRegister>
         <LinkRegister>
           <span>¿Ya tienes un cuenta?</span>
