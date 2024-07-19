@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   title: yup.string().required("Título es obligatorio"),
@@ -59,9 +60,11 @@ export default function CreateEvent() {
 
     try {
       const response = await eventRepo.create(eventData);
+      toast.success("Creado correctamente");
       router.push("/user/event");
     } catch (error) {
       console.error("Error al crear el event:", error);
+      toast.error("Error al crear el blog");
     }
   };
 

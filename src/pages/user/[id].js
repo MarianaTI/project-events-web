@@ -20,6 +20,7 @@ import dynamic from "next/dynamic";
 import GuestRepo from "@/infraestructure/implementation/httpRequest/axios/GuestRepo";
 import GetOneGuestUseCase from "@/application/usecases/guestUseCase/GetOneGuestUseCase";
 import DeleteEventUseCase from "@/application/usecases/eventUseCase/DeleteEventUseCase";
+import { toast } from "react-toastify";
 
 const Location = dynamic(() => import("@/components/Location/Location"), {
   ssr: false,
@@ -101,9 +102,11 @@ export default function IdEvent() {
   const handleDelete = async (_id) => {
     try {
       const response = await deleteEventUseCase.run(_id, userId);
+      toast.success("Evento cancelado");
       router.push("/user/event");
     } catch (error) {
       console.error("Error al eliminar el event:", error);
+      toast.error("Error al cencelar el evento");
     }
   };
 

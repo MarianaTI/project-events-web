@@ -22,6 +22,7 @@ import { useRouter } from "next/router";
 import { Switch } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   title: yup.string(),
@@ -29,7 +30,7 @@ const schema = yup.object().shape({
   date: yup.date(),
   cost: yup
     .number()
-    .positive("El costo debe ser un número positivo"),
+    .min(0, 'El costo debe ser un número positivo')
 });
 
 export default function UpdateEvent() {
@@ -102,9 +103,11 @@ export default function UpdateEvent() {
 
     try {
       const response = await updateEventUseCase.run(eventData);
+      toast.success("Editado correctamente");
       router.push("/user/event");
     } catch (error) {
       console.error("Error updating event: ", error);
+      toast.error("Error al crear el blog");
     }
   };
 

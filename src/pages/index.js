@@ -15,6 +15,7 @@ import { useState } from "react";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   email: yup
@@ -64,7 +65,7 @@ export default function Home() {
         route.push("/home");
       }
     } catch (error) {
-      console.log("Error: ", error);
+      toast.error("Correo o contraseña incorrecta");
     }
   };
 

@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   name: yup.string().required("El nombre de usuario es obligatorio"),
@@ -64,9 +65,11 @@ export default function Register() {
     try {
       const registeredUser = await signUpUserUseCase.run(user);
       console.log("Usuario creado: ", registeredUser);
+      toast.success("Registro exitoso!");
       route.push("/");
     } catch (error) {
       console.error("Error creando usuario:", error);
+      toast.error("Error al registrarse :(");
     }
   };
 
