@@ -18,6 +18,18 @@ import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  title: yup.string().required("Título es obligatorio"),
+  description: yup.string().required("Descripción es obligatoria"),
+  date: yup.date().required("Fecha y hora son obligatorios"),
+  cost: yup
+    .number()
+    .required("Costo es obligatorio")
+    .positive("El costo debe ser un número positivo"),
+});
 
 export default function CreateEvent() {
   const router = useRouter();
@@ -29,7 +41,9 @@ export default function CreateEvent() {
     control,
     handleSubmit,
     formState: { errors, isDirty },
-  } = useForm({});
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const eventRepo = new EventRepo();
 
@@ -40,12 +54,12 @@ export default function CreateEvent() {
       image: file,
       id_user: userId,
       location,
-      b_concluido: false
+      b_concluido: false,
     };
 
     try {
       const response = await eventRepo.create(eventData);
-      router.push('/user/event')
+      router.push("/user/event");
     } catch (error) {
       console.error("Error al crear el event:", error);
     }
@@ -64,7 +78,13 @@ export default function CreateEvent() {
           todos!
         </H5Styled>
         <FormStyled onSubmit={handleSubmit(onSubmit)}>
-          <Input control={control} name="title" label="Título" fullWidth />
+          <Input
+            control={control}
+            name="title"
+            label="Título"
+            fullWidth
+            error={errors.title?.message}
+          />
           <div>
             <Label>Descripción</Label>
             <Textarea
@@ -72,6 +92,7 @@ export default function CreateEvent() {
               fullWidth
               control={control}
               name="description"
+              error={errors.description?.message}
             />
           </div>
           <File
@@ -96,6 +117,7 @@ export default function CreateEvent() {
               label="Fecha y hora"
               type="datetime-local"
               fullWidth
+              error={errors.date?.message}
             />
             <Input
               control={control}
@@ -103,6 +125,7 @@ export default function CreateEvent() {
               label="Precio"
               fullWidth
               placeholder="$ 0.00"
+              error={errors.cost?.message}
             />
           </Flex>
           <div>

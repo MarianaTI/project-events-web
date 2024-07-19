@@ -13,6 +13,19 @@ import { useDispatch } from "react-redux";
 import CryptoJS from "crypto-js";
 import { useState } from "react";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Email no válido")
+    .required("El email es obligatorio"),
+  password: yup
+    .string()
+    //.min(6, "La contraseña debe tener al menos 6 caracteres")
+    .required("La contraseña es obligatoria"),
+});
 
 export default function Home() {
   const route = useRouter();
@@ -23,6 +36,7 @@ export default function Home() {
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       email: "",
       password: "",
@@ -71,12 +85,19 @@ export default function Home() {
             <p>Inicia sesión con tus datos aquí debajo 👇</p>
           </div>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Input fullWidth control={control} name="email" label="Correo" />
+            <Input
+              fullWidth
+              control={control}
+              name="email"
+              label="Correo"
+              error={errors.email?.message}
+            />
             <Input
               fullWidth
               control={control}
               name="password"
               label="Contraseña"
+              error={errors.password?.message}
               type={isShowPassword ? "text" : "password"}
               icon={
                 isShowPassword ? (

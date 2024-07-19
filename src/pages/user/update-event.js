@@ -20,6 +20,17 @@ import EventRepo from "@/infraestructure/implementation/httpRequest/axios/EventR
 import UpdateEventUseCase from "@/application/usecases/eventUseCase/UpdateEventUseCase";
 import { useRouter } from "next/router";
 import { Switch } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  title: yup.string(),
+  description: yup.string(),
+  date: yup.date(),
+  cost: yup
+    .number()
+    .positive("El costo debe ser un número positivo"),
+});
 
 export default function UpdateEvent() {
   const router = useRouter();
@@ -34,7 +45,9 @@ export default function UpdateEvent() {
     handleSubmit,
     reset,
     formState: { errors, isDirty },
-  } = useForm({});
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -108,7 +121,13 @@ export default function UpdateEvent() {
           destacada y actualizada en nuestro calendario!
         </H5Styled>
         <FormStyled onSubmit={handleSubmit(onSubmit)}>
-          <Input control={control} name="title" label="Título" fullWidth />
+          <Input
+            control={control}
+            name="title"
+            label="Título"
+            fullWidth
+            error={errors.title?.message}
+          />
           <div>
             <Label>Descripción</Label>
             <Textarea
@@ -116,6 +135,7 @@ export default function UpdateEvent() {
               fullWidth
               control={control}
               name="description"
+              error={errors.description?.message}
             />
           </div>
           <File
@@ -142,6 +162,8 @@ export default function UpdateEvent() {
               label="Fecha y hora"
               type="datetime-local"
               fullWidth
+              error={errors.date?.message}
+
             />
             <Input
               control={control}
@@ -149,6 +171,7 @@ export default function UpdateEvent() {
               label="Precio"
               fullWidth
               placeholder="$ 0.00"
+              error={errors.cost?.message}
             />
           </Flex>
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>

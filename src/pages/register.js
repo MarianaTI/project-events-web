@@ -13,6 +13,21 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object().shape({
+  name: yup.string().required("El nombre de usuario es obligatorio"),
+  lastname: yup.string().required("El apellido de usuario es obligatorio"),
+  email: yup
+    .string()
+    .email("Email no válido")
+    .required("El email es obligatorio"),
+  password: yup
+    .string()
+    .min(6, "La contraseña debe tener al menos 6 caracteres")
+    .required("La contraseña es obligatoria"),
+});
 
 export default function Register() {
   const route = useRouter();
@@ -22,6 +37,7 @@ export default function Register() {
     handleSubmit,
     formState: { errors, isDirty },
   } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       lastname: "",
@@ -66,9 +82,27 @@ export default function Register() {
           </p>
         </div>
         <FormRegister onSubmit={handleSubmit(onSubmit)}>
-          <Input fullWidth control={control} name="name" label="Nombre" />
-          <Input fullWidth control={control} name="lastname" label="Apellido" />
-          <Input fullWidth control={control} name="email" label="Correo" />
+          <Input
+            fullWidth
+            control={control}
+            name="name"
+            label="Nombre"
+            error={errors.name?.message}
+          />
+          <Input
+            fullWidth
+            control={control}
+            name="lastname"
+            label="Apellido"
+            error={errors.lastname?.message}
+          />
+          <Input
+            fullWidth
+            control={control}
+            name="email"
+            label="Correo"
+            error={errors.email?.message}
+          />
           <Input
             fullWidth
             control={control}
@@ -82,6 +116,7 @@ export default function Register() {
                 <IoEyeSharp onClick={togglePasswordVisibility} />
               )
             }
+            error={errors.password?.message}
           />
           <Button text="Registrarse" type="submit" />
         </FormRegister>
