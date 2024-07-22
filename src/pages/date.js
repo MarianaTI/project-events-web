@@ -34,9 +34,9 @@ export default function DateComponent() {
           (event) =>
             event.b_activo === true &&
             event.b_cancelado === false &&
-            event.b_concluido === true
+            event.b_concluido === false
         );
-  
+
         const formattedEvents = filteredEvents.map((event) => ({
           id: event._id,
           title: event.title,
@@ -44,16 +44,15 @@ export default function DateComponent() {
           end: new Date(new Date(event.date).getTime() + 60 * 60 * 1000), // suponer una duración de 1 hora
           allDay: false,
         }));
-  
+
         setEvents(formattedEvents);
       } catch (error) {
         console.error("Error fetching events: ", error);
       }
     };
-  
+
     fetchEvents();
   }, []);
-  
 
   const eventPropGetter = (event) => {
     const backgroundColor = event.id % 2 === 0 ? "#a684d6" : "#5b0888"; // Ejemplo: color diferente para eventos pares e impares
@@ -72,9 +71,9 @@ export default function DateComponent() {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: "75vh"}}
+          style={{ height: "75vh" }}
           onSelectEvent={(event) => navigateToEvent(event.id)}
-          views={['month', 'week', 'day']}
+          views={["month", "week", "day"]}
           eventPropGetter={eventPropGetter}
         />
       </Content>

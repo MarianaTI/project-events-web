@@ -29,7 +29,7 @@ const schema = yup.object().shape({
   cost: yup
     .number()
     .required("Costo es obligatorio")
-    .positive("El costo debe ser un número positivo"),
+    .min(0, 'El costo debe ser un número positivo')
 });
 
 export default function CreateEvent() {

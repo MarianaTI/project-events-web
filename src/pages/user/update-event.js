@@ -65,7 +65,7 @@ export default function UpdateEvent() {
             cost: router.query.cost,
             location: router.query.location,
             image: { secureUrl: router.query.image },
-            b_activo: router.query.b_activo === "true", // Convertir a booleano
+            b_activo: router.query.b_activo, // Convertir a booleano
           };
           reset(event);
           setImageUrl(event.image.secureUrl);

@@ -60,6 +60,7 @@ export default function IdEvent() {
         cost: selectedEvent.cost,
         location: selectedEvent.location,
         image: selectedEvent.image.secureUrl,
+        b_activo: selectedEvent.b_activo
       },
     });
   };
