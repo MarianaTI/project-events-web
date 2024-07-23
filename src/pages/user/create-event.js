@@ -15,7 +15,7 @@ import {
   Logo,
 } from "@/styles/AddEvent.style";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -29,7 +29,11 @@ const schema = yup.object().shape({
   cost: yup
     .number()
     .required("Costo es obligatorio")
-    .min(0, 'El costo debe ser un número positivo')
+    .min(0, "El costo debe ser un número positivo"),
+  location: yup
+    .mixed()
+    .required("Ubicación es obligatoria")
+    .test("location", "Ubicación es obligatoria", (value) => value !== null),
 });
 
 export default function CreateEvent() {
@@ -41,6 +45,7 @@ export default function CreateEvent() {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors, isDirty },
   } = useForm({
     resolver: yupResolver(schema),
@@ -67,6 +72,10 @@ export default function CreateEvent() {
       toast.error("Error al crear el blog");
     }
   };
+
+  useEffect(() => {
+    setValue("location", location);
+  }, [location, setValue]);
 
   return (
     <Container>
@@ -134,6 +143,7 @@ export default function CreateEvent() {
           <div>
             <Label>Ubicación</Label>
             <MapComponent onLocationChange={setLocation} />
+            {errors.location && <p>{errors.location.message}</p>}
           </div>
           <ButtonContainer>
             <Button text="Guardar información" type="submit" />
